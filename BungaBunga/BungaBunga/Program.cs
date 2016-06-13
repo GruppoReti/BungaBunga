@@ -12,6 +12,7 @@ namespace BungaBunga
         {
             Console.ReadKey();
             Console.WriteLine("update");
+            Console.Write("salvini");
         }
     }
 }
