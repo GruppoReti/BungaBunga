@@ -8,14 +8,15 @@ namespace BungaBunga
 {
     public class Persona
     {
-        private string nome;
-        private char sesso;
-        private int denaro;
-        private int età;
-        private int altezza;
-        private int peso;
-        private float colorecapelli;
-        private float costituzione;
-        private string presenze;
+//ATTRIBUTI
+        protected string nome;
+        protected char sesso;
+        protected int denaro;
+        protected int età;
+        protected int altezza;
+        protected int peso;
+        protected float colorecapelli;
+        protected float costituzione;
+        protected string presenze;
     }
 }

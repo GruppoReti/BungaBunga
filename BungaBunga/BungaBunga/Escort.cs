@@ -8,5 +8,6 @@ namespace BungaBunga
 {
     public class Escort : Persona
     {
+
     }
 }
