@@ -7,7 +7,7 @@ namespace BungaBunga
         static void Main(string[] args)
         {
             Console.ReadKey();
-            Console.WriteLine("prova piporea");
+            Console.WriteLine("prova pipporea");
         }
     }
 }
