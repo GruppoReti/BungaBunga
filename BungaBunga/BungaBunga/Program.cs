@@ -8,15 +8,26 @@ namespace BungaBunga
 {
     class Program
     {
+        private List<Politico> ListaPolitici = new List<Politico>();
+        private List<Escort> ListaEscort = new List<Escort>();
+
         static void Main(string[] args)
         {
-            Console.WriteLine("update");
-            Console.Write("grattini su salvini");
-            Console.ReadKey();
 
+        }
 
-            Console.WriteLine("prova piporea");
-            ComandoAcaso(Seba);
+        private void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
+        {
+
+        }
+
+        private void estrometti(string nome)
+        {
+
+        }
+
+        private void bungabunga(char giorno, int Naccoppiamenti)
+        {
 
         }
     }
