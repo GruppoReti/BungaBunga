@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BungaBunga
 {
@@ -6,8 +10,10 @@ namespace BungaBunga
     {
         static void Main(string[] args)
         {
-            Console.ReadKey();
-            Console.WriteLine("prova pipporea");
+            Console.WriteLine("update");
+
+            /////dadasdasa////
+
         }
     }
 }
