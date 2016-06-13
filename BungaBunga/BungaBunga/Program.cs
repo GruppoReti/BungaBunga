@@ -10,9 +10,9 @@ namespace BungaBunga
     {
         static void Main(string[] args)
         {
-            Console.ReadKey();
             Console.WriteLine("update");
-            Console.Write("salvini");
+            Console.Write("grattini su salvini");
+            Console.ReadKey();
         }
     }
 }
