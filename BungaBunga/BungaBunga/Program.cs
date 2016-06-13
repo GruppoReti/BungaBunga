@@ -8,6 +8,7 @@ namespace BungaBunga
         {
             Console.ReadKey();
             Console.WriteLine("ciccio");
+            Console.Write("salvini");
         }
     }
 }
