@@ -16,6 +16,10 @@ namespace BungaBunga
             Console.Write("grattini con salvini");
             Console.ReadKey();
 
+
+            Console.WriteLine("prova piporea");
+            ComandoAcaso(Seba);
+
         }
     }
 }
