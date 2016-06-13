@@ -8,7 +8,7 @@ namespace BungaBunga
 {
     public class Escort : Persona
     {
-        //COSTRUTTORE
+        //COSTRUTTORE 
         public Escort(string name, char sex, int money, int age, int height, int weight, float hair, float costitution, string presence)
         {
             nome = name;
