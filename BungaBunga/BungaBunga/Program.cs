@@ -8,7 +8,7 @@ namespace BungaBunga
         {
             Console.ReadKey();
             Console.WriteLine("prova seba");
-            Console.WriteLine("modifica di Seba")
+            Console.WriteLine("modifica di Seba");
         }
     }
 }
