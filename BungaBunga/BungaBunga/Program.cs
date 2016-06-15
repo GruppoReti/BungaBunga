@@ -50,8 +50,8 @@ namespace BungaBunga
 
         private float CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
         {
-            float discrepanza=0;
-
+            float discrepanza = 0;
+           // int differences =  P.denaro - E.denaro;
             return discrepanza;
         }
 
