@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +18,33 @@ namespace BungaBunga
 
 
 
-        public void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
+        public void introduci_politico(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze, Politico P)
         {
+            P.Nome = nome;
+            P.Sesso = sesso;
+            P.Denaro = denaro;
+            P.Età = età;
+            P.Altezza = altezza;
+            P.Peso = peso;
+            P.Colorecapelli = colorecapelli;
+            P.Costituzione = costituzione;
+            P.Presenze = presenze;
+
+
+        }
+
+        public void introduci_escort(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze, Escort E)
+        {
+            E.Nome = nome;
+            E.Sesso = sesso;
+            E.Denaro = denaro;
+            E.Età = età;
+            E.Altezza = altezza;
+            E.Peso = peso;
+            E.Colorecapelli = colorecapelli;
+            E.Costituzione = costituzione;
+            E.Presenze = presenze;
+
 
         }
 

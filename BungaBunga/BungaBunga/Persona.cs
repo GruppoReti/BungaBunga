@@ -20,7 +20,7 @@ namespace BungaBunga
         protected string presenze;
 
 //PROPRIETA'
-        public string Name
+        public string Nome
         {
             get { return nome; }
             set { nome = value; }
