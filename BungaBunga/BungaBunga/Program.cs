@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,8 +51,8 @@ namespace BungaBunga
         private double CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
         {
             double Affinità = 0;
-            double[] relevance = {0.00009, 1.0, 0.1, 0.15, 0.5, 2.0};
-            Affinità = Math.Abs(P.Denaro - E.Denaro) * relevance[1] + Math.Abs(P.Età - E.Età) * relevance[2] + Math.Abs(P.Altezza - E.Altezza) * relevance[3] + Math.Abs(P.Peso - E.Peso) * relevance[4] + Math.Abs(P.Colorecapelli - E.Colorecapelli) * relevance[5] + Math.Abs(P.Costituzione - E.Costituzione) * relevance[6];
+            double[] importanza = {0.00009, 1.0, 0.1, 0.15, 0.5, 2.0};
+            Affinità = Math.Abs(P.Denaro - E.Denaro) * importanza[1] + Math.Abs(P.Età - E.Età) * importanza[2] + Math.Abs(P.Altezza - E.Altezza) * importanza[3] + Math.Abs(P.Peso - E.Peso) * importanza[4] + Math.Abs(P.Colorecapelli - E.Colorecapelli) * importanza[5] + Math.Abs(P.Costituzione - E.Costituzione) * importanza[6];
             return Affinità;
         }
 
