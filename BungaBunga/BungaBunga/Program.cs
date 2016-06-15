@@ -13,7 +13,7 @@ namespace BungaBunga
 
         static void Main(string[] args)
         {
-
+            Console.ReadKey();
         }
 
 
@@ -48,11 +48,12 @@ namespace BungaBunga
 
 
 
-        private float CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
+        private double CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
         {
-            float discrepanza = 0;
-           // int differences =  P.denaro - E.denaro;
-            return discrepanza;
+            double Affinità = 0;
+            double[] relevance = {0.00009, 1.0, 0.1, 0.15, 0.5, 2.0};
+            Affinità = Math.Abs(P.Denaro - E.Denaro) * relevance[1] + Math.Abs(P.Età - E.Età) * relevance[2] + Math.Abs(P.Altezza - E.Altezza) * relevance[3] + Math.Abs(P.Peso - E.Peso) * relevance[4] + Math.Abs(P.Colorecapelli - E.Colorecapelli) * relevance[5] + Math.Abs(P.Costituzione - E.Costituzione) * relevance[6];
+            return Affinità;
         }
 
 

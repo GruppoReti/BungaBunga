@@ -25,7 +25,7 @@ namespace BungaBunga
             get { return nome; }
             set { nome = value; }
         }
-
+  
         public char Sesso
         {
             get { return sesso; }
