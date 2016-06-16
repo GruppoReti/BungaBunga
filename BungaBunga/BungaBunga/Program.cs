@@ -12,41 +12,33 @@ namespace BungaBunga
         private List<Escort> ListaEscort = new List<Escort>();
 
         static void Main(string[] args)
-        {
+        {   
+            //test affinità
+            Program pg = new Program();
+            Politico P = new Politico("berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
+            Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Console.WriteLine(pg.CalcolaAffinità(P,E));
+            //fine test affinità
             Console.ReadKey();
         }
 
 
 
-        public void introduci_politico(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze, Politico P)
-        {
-            P.Nome = nome;
-            P.Sesso = sesso;
-            P.Denaro = denaro;
-            P.Età = età;
-            P.Altezza = altezza;
-            P.Peso = peso;
-            P.Colorecapelli = colorecapelli;
-            P.Costituzione = costituzione;
-            P.Presenze = presenze;
+        public void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
+        {   
+            //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
+            if (sesso == 'M')
+            {
+                ListaPolitici.Add(new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
+            }
+            else
+            {
+                ListaEscort.Add(new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
+            }
 
 
         }
 
-        public void introduci_escort(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze, Escort E)
-        {
-            E.Nome = nome;
-            E.Sesso = sesso;
-            E.Denaro = denaro;
-            E.Età = età;
-            E.Altezza = altezza;
-            E.Peso = peso;
-            E.Colorecapelli = colorecapelli;
-            E.Costituzione = costituzione;
-            E.Presenze = presenze;
-
-
-        }
 
 
 
@@ -75,17 +67,17 @@ namespace BungaBunga
 
         private double CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
         {
-            double Affinità = 0;
-            double[] importanza = {0.00009, 1.0, 0.1, 0.15, 0.5, 2.0};
-            Affinità = Math.Abs(P.Denaro - E.Denaro) * importanza[1] + Math.Abs(P.Età - E.Età) * importanza[2] + Math.Abs(P.Altezza - E.Altezza) * importanza[3] + Math.Abs(P.Peso - E.Peso) * importanza[4] + Math.Abs(P.Colorecapelli - E.Colorecapelli) * importanza[5] + Math.Abs(P.Costituzione - E.Costituzione) * importanza[6];
-            return Affinità;
+            double Discrepanza = 0;
+            double[] importanza = {0.0009, 1.0, 0.1, 0.15, 0.5, 2.0};
+            Discrepanza = Math.Abs(P.GetDenaro() - E.GetDenaro()) * importanza[0] + Math.Abs(P.GetEtà() - E.GetEtà()) * importanza[1] + Math.Abs(P.GetAltezza() - E.GetAltezza()) * importanza[2] + Math.Abs(P.GetPeso() - E.GetPeso()) * importanza[3] + Math.Abs(P.GetColoreCapelli() - E.GetColoreCapelli()) * importanza[4] + Math.Abs(P.GetCostituzione() - E.GetCostituzione()) * importanza[5];
+            return Discrepanza;
         }
 
 
 
         private Tuple<string,string> LeggiIstruzione(int n)  //legge l'istruzione alla riga n-esima nel file di input e la restituisce interpretata nella forma di Tupla <(IDevento), (parametri)>
         {
-            string istruzione=null;
+            string istruzione = null;
             string parametri = null;
             //gestione lettura da file
 
