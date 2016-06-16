@@ -13,12 +13,28 @@ namespace BungaBunga
 
         static void Main(string[] args)
         {   
-            //test affinità
+            //test GeneraOrgie
             Program pg = new Program();
             Politico P = new Politico("berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
             Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-            Console.WriteLine(pg.CalcolaAffinità(P,E));
-            //fine test affinità
+            Politico P2 = new Politico("Bossi", 'M', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Escort E2 = new Escort("Cicciolina", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Politico P3 = new Politico("Brunetta", 'M', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Escort E3 = new Escort("Belen", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+
+            List<Tuple<Politico, Escort>> listaprova = new List<Tuple<Politico, Escort>>();
+            listaprova.Add(Tuple.Create(P3, E));
+            listaprova.Add(Tuple.Create(P3, E2));
+            listaprova.Add(Tuple.Create(P3, E3));
+            for (int j = 0; j < pg.GeneraOrgie(listaprova).Count; j++)
+            {
+                for (int i = 0; i < pg.GeneraOrgie(listaprova)[j].Count; i++)
+                {
+                    Console.Write("{0} ",pg.GeneraOrgie(listaprova)[j][i].GetNome());
+                }
+                Console.WriteLine();
+            }
+            //fine test GeneraOrgie
             Console.ReadKey();
         }
 
@@ -87,6 +103,42 @@ namespace BungaBunga
             return tupla;
         }
 
+        private List<List<Persona>> GeneraOrgie(List<Tuple<Politico,Escort>> ListaCoppie)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
+        {
+            List<List<Persona>> ListaDiGruppi = new List<List<Persona>>();
+            for(int i=0; i < ListaCoppie.Count(); i++)  //ciclo su ogni elemento della lista di coppie
+            {
+                bool CoppiaAggiunta = false;  //flag per segnalare se la coppia ha trovato la stanza a cui partecipare
+                for (int j = 0; j < ListaDiGruppi.Count(); j++) {   //ciclo su ogni elemento dell'attuale lista di stanze
+                    if (ListaDiGruppi[j].Contains(ListaCoppie[i].Item1) && !ListaDiGruppi[j].Contains(ListaCoppie[i].Item2))  //se nel gruppo j-esimo è già presente il politico(della coppia i-esima), ma non la escort (della coppia i-esima) allora la aggiungo al gruppo j-esimo
+                    {
+                        ListaDiGruppi[j].Add(ListaCoppie[i].Item2); //Escort
+                        CoppiaAggiunta = true;
+                        break;
+                    }
+                    if (!ListaDiGruppi[j].Contains(ListaCoppie[i].Item1) && ListaDiGruppi[j].Contains(ListaCoppie[i].Item2))  //se nel gruppo j-esimo è già presente l'escort(della coppia i-esima), ma non il politico (della coppia i-esima) allora lo aggiungo al gruppo j-esimo
+                    {
+                        ListaDiGruppi[j].Add(ListaCoppie[i].Item1); //Politico
+                        CoppiaAggiunta = true;
+                        break;
+                    }
+                } // fine ciclo sulle stanze già esistenti
+                if (!CoppiaAggiunta) //se la coppia non può partecipare ad una stanza già esistente, creo una nuova stanza con i due elementi della coppia
+                {
+                    List < Persona >  Gruppo = new List<Persona>();
+                    Gruppo.Add(ListaCoppie[i].Item1);
+                    Gruppo.Add(ListaCoppie[i].Item2);
+                    ListaDiGruppi.Add(Gruppo);
+                }
+
+            }
+            return ListaDiGruppi;
+        }
+
+        private void TrovaOrgione()
+        {
+
+        }
 
     }
 }
