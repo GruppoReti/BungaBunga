@@ -223,5 +223,149 @@ namespace BungaBunga
             Console.WriteLine("{0} {1} {2}",ListaDiGruppi.Count,NPolitici,NEscort);
         }
 
+        private bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
+        {
+            int check = 0;
+            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
+            string[] sessi = { "M", "F" };
+            string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
+            int[] range_età = { 17, 18, 19, 20, 21, 22, 23, 24 };
+            int counter = 0;
+
+            // check nome
+
+            for (int i = 0; i < simbolinonpermessi.Length; i++)
+            {
+                if (nome.IndexOf(simbolinonpermessi[i]) == -1)
+                {
+                    //counter = counter + 1;
+                }
+                else
+                {
+                    Console.WriteLine("Il campo \"nome\" contiene il simbolo non permesso {0}", simbolinonpermessi[i]);
+                    return false;
+                }
+            }
+            check = check + 1;
+
+            // check sesso
+
+            if (sesso == 'M' || sesso == 'F')
+            {
+                check = check + 1;
+            }
+            else
+            {
+                Console.WriteLine("Il campo \"sesso\" inserito è errato");
+                return false;
+            }
+
+            // check denaro
+            if (denaro % 2 == 0)
+            {
+                check = check + 1;
+            }
+            else
+            {
+                Console.WriteLine("Il campo \"denaro\" non è un intero");
+                return false;
+            }
+
+            // check età
+
+            counter = 0;
+            for (int i = 0; i < range_età.Length; i++)
+            {
+                if (età == range_età[i] && età % 2 == 0)
+                {
+                    check = check + 1;
+                    counter = counter + 1;
+                }
+            }
+            if (counter == range_età.Length)
+            {
+                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni) oppure non è un numero intero", età);
+                return false;
+            }
+
+            // check altezza
+
+            if (altezza % 2 == 0 && altezza > 130 && altezza < 220)
+            {
+                check = check + 1;
+            }
+            else
+            {
+                Console.WriteLine("Il campo \"altezza\" inserito {0} non è un numero intero oppure non è in cm", altezza);
+                return false;
+            }
+
+
+            // check peso
+
+            if (peso % 2 == 0 && peso > 10 && peso < 500)
+            {
+                check = check + 1;
+            }
+            else
+            {
+                Console.WriteLine("Il campo \"peso\" inserito {0} non è un numero intero oppure non è in kg", altezza);
+                return false;
+            }
+
+            // check colore capelli
+
+            if (colorecapelli < 0.0 && colorecapelli > 1.0)
+            {
+                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 -1.0)", colorecapelli);
+                return false;
+            }
+            else
+            {
+                check = check + 1;
+            }
+
+            //check costituzione
+
+            if (costituzione < 0.0 && costituzione > 1.0)
+            {
+                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 -1.0)", costituzione);
+                return false;
+            }
+            else
+            {
+                check = check + 1;
+            }
+
+            //check giorni settimana
+
+            counter = 0;
+            for (int i = 0; i < giornisettimana.Length; i++)
+            {
+                if (presenze.IndexOf(giornisettimana[i]) == -1)
+                {
+                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", giornisettimana[i]);
+                    return false;
+                }
+                else
+                {
+                    //counter = counter + 1;
+                }
+            }
+            check = check + 1;
+
+
+            // check finale
+
+            if (check == 9)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
