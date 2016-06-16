@@ -9,8 +9,7 @@ namespace BungaBunga
     {
         private static List<Politico> ListaPolitici = new List<Politico>();
         private static List<Escort> ListaEscort = new List<Escort>();
-        private static List<Politico> ListaNera_Politici = new List<Politico>();
-        private static List<Escort> ListaNera_Escort = new List<Escort>();
+        private static List<Persona> ListaNera = new List<Persona>();
 
         private static string nome;
         private static char sesso;
@@ -30,10 +29,7 @@ namespace BungaBunga
             Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
             Console.WriteLine(pg.CalcolaAffinità(P,E));
             //fine test affinità
-
-
-            //test lettura da file
-
+            
             int counter = 0;
             string line;
             string evento;
@@ -103,13 +99,13 @@ namespace BungaBunga
             if (sesso == 'M')
             {
                 Politico P = new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                if(!(ListaNera_Politici.Contains(P) || ListaPolitici.Contains(P))) ListaPolitici.Add(P); 
+                if(!(ListaNera.Contains(P) || ListaPolitici.Contains(P))) ListaPolitici.Add(P); 
                 //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
             }
             else
             {
                 Escort E = new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                if (!(ListaNera_Escort.Contains(E) || ListaEscort.Contains(E))) ListaEscort.Add(E);
+                if (!(ListaNera.Contains(E) || ListaEscort.Contains(E))) ListaEscort.Add(E);
             }
 
 
@@ -123,7 +119,7 @@ namespace BungaBunga
             if (politico_estromesso != null)
             {
                 ListaPolitici.Remove(politico_estromesso);  // elimina il soggetto dalla lista
-                ListaNera_Politici.Add(politico_estromesso); //aggiungo il soggetto alla black list
+                ListaNera.Add(politico_estromesso); //aggiungo il soggetto alla black list
             }
 
             else
@@ -132,7 +128,7 @@ namespace BungaBunga
                 if (escort_estromessa != null)
                 {
                     ListaEscort.Remove(escort_estromessa);
-                    ListaNera_Escort.Add(escort_estromessa);
+                    ListaNera.Add(escort_estromessa);
                 }
 
             }
