@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BungaBunga
 {
-    class Program : Iestrometti, Ibungabunga, Iintroduci
+    class Program 
     {
-        private List<Politico> ListaPolitici = new List<Politico>();
-        private List<Escort> ListaEscort = new List<Escort>();
-        private List<Politico> ListaNera_Politici = new List<Politico>();
-        private List<Escort> ListaNera_Escort = new List<Escort>();
+        private static List<Politico> ListaPolitici = new List<Politico>();
+        private static List<Escort> ListaEscort = new List<Escort>();
+        private static List<Politico> ListaNera_Politici = new List<Politico>();
+        private static List<Escort> ListaNera_Escort = new List<Escort>();
+
+        private static string nome;
+        private static char sesso;
+        private static int denaro;
+        private static int eta;
+        private static int altezza;
+        private static int peso;
+        private static float capelli;
+        private static float costituzione;
+        private static string presenze;
 
         static void Main(string[] args)
         {   
@@ -21,14 +30,74 @@ namespace BungaBunga
             Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
             Console.WriteLine(pg.CalcolaAffinità(P,E));
             //fine test affinità
-            Console.ReadKey();
 
-         
+
+            //test lettura da file
+
+            int counter = 0;
+            string line;
+            string evento;
+            
+
+            string path = @"C:\Users\rebolan1\Desktop\provaBunga.txt";
+           // string fileName ="provaBunga.txt";
+           
+            System.IO.StreamReader file = new System.IO.StreamReader(path);
+
+            while ((line = file.ReadLine()) != null)
+            {
+                System.Console.WriteLine(line);
+
+                string[] strings = line.Split(' ');
+                evento = strings[0];
+
+                if (evento == "in")
+                {
+
+                    nome = strings[1];
+                    sesso = System.Convert.ToChar(strings[2]);
+                    denaro = System.Convert.ToInt32(strings[3]);
+                    eta = System.Convert.ToInt32(strings[4]);
+                    altezza = System.Convert.ToInt32(strings[5]);
+                    peso = System.Convert.ToInt32(strings[6]);
+                    capelli = (float)System.Convert.ToDouble(strings[7]);
+                    costituzione = (float)System.Convert.ToDouble(strings[8]);
+                    presenze = strings[9];
+
+                    Console.WriteLine("Introdotta alla festa {0}", nome);
+
+                    /* if (verifica_Persona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
+                     {
+                         introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                     }
+    
+                    else Console.WriteLine("Dati della persona non conformi agli standard");*/
+
+                }
+
+                if (evento == "out") {
+                    estrometti(strings[1]);
+                    Console.WriteLine("Estromissione della persona: {0}",strings[1]);
+                }
+
+                if (evento == "bungabunga") {
+                    bungabunga(Convert.ToChar(strings[2]),Convert.ToInt32(strings[3]));
+                    Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avverranno {1} donazioni", Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
+                }
+                
+
+                counter++;
+            }
+
+            file.Close();
+
+            Console.ReadKey();
+            
 
         }
-        
 
-        public void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
+
+        public static void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
         {   
             //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
             if (sesso == 'M')
@@ -40,7 +109,6 @@ namespace BungaBunga
             else
             {
                 Escort E = new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                ListaEscort.Add(new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
                 if (!(ListaNera_Escort.Contains(E) || ListaEscort.Contains(E))) ListaEscort.Add(E);
             }
 
@@ -48,7 +116,7 @@ namespace BungaBunga
         }
         
         
-        public void estrometti(string nome)
+        public static void estrometti(string nome)
         {
 
             var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.GetNome() == nome); // controlla se il soggetto è già presente nella lista
@@ -73,20 +141,9 @@ namespace BungaBunga
 
 
 
-        public void bungabunga(char giorno, int Naccoppiamenti)
+        public static void bungabunga(char giorno, int Naccoppiamenti)
         {
-            List<Tuple<Politico, Escort, float>> ListaDiAffinità = new List<Tuple<Politico, Escort, float>>();
-            //per ogni possibile coppia Politico-Escort calcoliamo la discrepanza secondo le indicazioni del testo, e generiamo una Tupla <Politico, Escort, float> da inserire nella lista
-
-            //ultimata la generazione della lista, la riordiniamo per discrepanza
-            //consideriamo solo gli Naccoppiamenti migliori della lista
-            //chiamiamo la funzione "GeneraOrgie" per calcolare il numero di gruppetti che si vengono a formare
-            //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
-
-
-
-
-
+            
 
         }
 
