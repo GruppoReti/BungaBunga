@@ -39,7 +39,7 @@ namespace BungaBunga
             System.IO.StreamReader file = new System.IO.StreamReader(path);
 
             while ((line = file.ReadLine()) != null)
-            {
+            { 
                 System.Console.WriteLine(line);
 
                 string[] strings = line.Split(' ');
