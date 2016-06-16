@@ -14,9 +14,24 @@ namespace BungaBunga
         static void Main(string[] args)
         {
             Console.ReadKey();
+
+           /*estrai una riga da file
+            * if(prima_parola_da_file==in) {
+            * Politico P = new Politico;
+            * introduci_politico(specifiche_da_file);
+            * ListaPolitici.Add(P)
+            * }
+            * 
+            * if(prima_parola_da_file==out){
+            * estrometti(seconda_parola_in_file)
+            * }
+            * 
+            * 
+            * 
+            */
+
         }
-
-
+        
 
         public void introduci_politico(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze, Politico P)
         {
@@ -53,6 +68,12 @@ namespace BungaBunga
         public void estrometti(string nome)
         {
 
+            var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.Nome == nome); // controlla se il soggetto è già presente nella lista
+            if (politico_estromesso != null) ListaPolitici.Remove(politico_estromesso);  // elimina il soggetto dalla lista
+
+            var escort_estromessa = ListaEscort.SingleOrDefault(x => x.Nome == nome);
+            if (escort_estromessa != null) ListaEscort.Remove(escort_estromessa);
+            
         }
 
 
@@ -63,12 +84,15 @@ namespace BungaBunga
             //per ogni possibile coppia Politico-Escort calcoliamo la discrepanza secondo le indicazioni del testo, e generiamo una Tupla <Politico, Escort, float> da inserire nella lista
 
             //ultimata la generazione della lista, la riordiniamo per discrepanza
-
             //consideriamo solo gli Naccoppiamenti migliori della lista
-
             //chiamiamo la funzione "GeneraOrgie" per calcolare il numero di gruppetti che si vengono a formare
-
             //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
+
+
+
+
+
+
         }
 
 
