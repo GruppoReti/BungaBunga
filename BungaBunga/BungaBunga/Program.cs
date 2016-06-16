@@ -232,7 +232,7 @@ namespace BungaBunga
             {
                 if (nome.IndexOf(simbolinonpermessi[i]) == -1)
                 {
-                    //counter = counter + 1;
+                    //
                 }
                 else
                 {
@@ -270,7 +270,7 @@ namespace BungaBunga
             counter = 0;
             for (int i = 0; i < range_età.Length; i++)
             {
-                if (età == range_età[i] && età % 2 == 0)
+                if (età == range_età[i])
                 {
                     check = check + 1;
                     counter = counter + 1;
@@ -278,7 +278,7 @@ namespace BungaBunga
             }
             if (counter == range_età.Length)
             {
-                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni) oppure non è un numero intero", età);
+                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni)", età);
                 return false;
             }
 
@@ -290,7 +290,7 @@ namespace BungaBunga
             }
             else
             {
-                Console.WriteLine("Il campo \"altezza\" inserito {0} non è un numero intero oppure non è in cm", altezza);
+                Console.WriteLine("Il campo \"altezza\" inserito {0} non è in cm", altezza);
                 return false;
             }
 
@@ -303,7 +303,7 @@ namespace BungaBunga
             }
             else
             {
-                Console.WriteLine("Il campo \"peso\" inserito {0} non è un numero intero oppure non è in kg", peso);
+                Console.WriteLine("Il campo \"peso\" inserito {0} non è in kg", peso);
                 return false;
             }
 
@@ -311,7 +311,7 @@ namespace BungaBunga
 
             if (colorecapelli < 0.0 && colorecapelli > 1.0)
             {
-                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 -1.0)", colorecapelli);
+                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
                 return false;
             }
             else
