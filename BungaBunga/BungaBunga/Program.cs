@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,76 @@ namespace BungaBunga
         private static List<Escort> ListaEscort = new List<Escort>();
         private static List<Persona> ListaNera = new List<Persona>();
 
+        private static string nome;
+        private static char sesso;
+        private static int denaro;
+        private static int eta;
+        private static int altezza;
+        private static int peso;
+        private static float capelli;
+        private static float costituzione;
+        private static string presenze;
+
+        static void Main(string[] args)
+        {
+            //test GeneraOrgie
+            Politico P = new Politico("Berlusconi", 'M', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Console.WriteLine(CalcolaAffinità(P, E));
+            //fine test affinità
+
+            string line;
+            string evento;
+
+            string path = @"C:\Users\rebolan1\Desktop\provaBunga.txt";
+            // string fileName ="provaBunga.txt";
+
+            System.IO.StreamReader file = new System.IO.StreamReader(path);
+
+            while ((line = file.ReadLine()) != null)
+            {
+                System.Console.WriteLine(line);
+
+                string[] strings = line.Split(' ');
+                evento = strings[0];
+
+                if (evento == "in")
+                {
+                    assegna_caratteristiche(strings);
+                    Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
+
+                    if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
+                    {
+                        introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                    }
+
+                    //else Console.WriteLine("Dati della persona non conformi agli standard");
+
+                }
+
+                if (evento == "out")
+                {
+                    estrometti(strings[1]);
+                    Console.WriteLine("Estromissione della persona: {0}", strings[1]);
+                }
+
+                if (evento == "bungabunga")
+                {
+                    bungabunga(Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
+                    Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avverranno {1} donazioni", Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
+                }
+
+
+            }
+
+            file.Close();
+
+            Console.ReadKey();
+
+
+        }
+
+        /*
         static void Main(string[] args)
         {   
             //test GeneraOrgie
@@ -32,10 +103,24 @@ namespace BungaBunga
             bungabunga('E', 5);
             //fine test GeneraOrgie
             Console.ReadKey();
-        }
-        
+        }*/
 
-        public void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
+
+        public static void assegna_caratteristiche(string[] strings)
+        {
+
+            nome = strings[1];
+            sesso = System.Convert.ToChar(strings[2]);
+            denaro = System.Convert.ToInt32(strings[3]);
+            eta = System.Convert.ToInt32(strings[4]);
+            altezza = System.Convert.ToInt32(strings[5]);
+            peso = System.Convert.ToInt32(strings[6]);
+            capelli = (float)System.Convert.ToDouble(strings[7]);
+            costituzione = (float)System.Convert.ToDouble(strings[8]);
+            presenze = strings[9];
+        }
+
+        public static void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
         {   
             //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
 
@@ -53,7 +138,7 @@ namespace BungaBunga
         }
 
 
-        public void estrometti(string nome)
+        public static void estrometti(string nome)
         {
 
             var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.GetNome() == nome); // controlla se il soggetto è già presente nella lista
@@ -223,7 +308,7 @@ namespace BungaBunga
             Console.WriteLine("{0} {1} {2}",ListaDiGruppi.Count,NPolitici,NEscort);
         }
 
-        private bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
+        private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
             int check = 0;
             string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
