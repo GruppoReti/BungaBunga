@@ -15,9 +15,9 @@ namespace BungaBunga
         {   
             //test affinità
             Program pg = new Program();
-            Politico P = new Politico("berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
+            Politico P = new Politico("Berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
             Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-            Console.WriteLine(pg.CalcolaAffinità(P,E));
+            Console.WriteLine("La discrepanza tra {0} e {1} è {2}", P.GetNome(), E.GetNome(), pg.CalcolaAffinità(P,E));
             //fine test affinità
             Console.ReadKey();
         }
@@ -27,6 +27,7 @@ namespace BungaBunga
         public void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
         {   
             //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
+
             if (sesso == 'M')
             {
                 ListaPolitici.Add(new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
@@ -35,8 +36,6 @@ namespace BungaBunga
             {
                 ListaEscort.Add(new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
             }
-
-
         }
 
 
@@ -86,7 +85,5 @@ namespace BungaBunga
             Tuple<string, string> tupla = new Tuple<string, string>(istruzione, parametri);
             return tupla;
         }
-
-
     }
 }
