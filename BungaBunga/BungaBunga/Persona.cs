@@ -19,62 +19,57 @@ namespace BungaBunga
         protected float costituzione;
         protected string presenze;
 
-//PROPRIETA'
-        public string Nome
+        public string GetNome()
         {
-            get { return nome; }
-            set { nome = value; }
-        }
-  
-        public char Sesso
-        {
-            get { return sesso; }
-            set { sesso = value; }
+            return nome;
         }
 
-        public int Denaro
+        public char GetSesso()
         {
-            get { return denaro; }
-            set { denaro = value; }
+            return sesso;
+        }
+        public int GetDenaro()
+        {
+            return denaro;
+        }
+        public int GetEtà()
+        {
+            return età;
+        }
+        public int GetAltezza()
+        {
+            return altezza;
         }
 
-        public int Età
+        public int GetPeso()
         {
-            get { return età; }
-            set { età = value; }
+            return peso;
         }
 
-        public int Altezza
+        public float GetColoreCapelli()
         {
-            get { return altezza; }
-            set { altezza = value; }
+            return colorecapelli;
         }
 
-        public int Peso
+        public float GetCostituzione()
         {
-            get { return peso; }
-            set { peso = value; }
+            return costituzione;
         }
-
-        public float Colorecapelli
+        public string GetPresenze()
         {
-            get { return colorecapelli; }
-            set { colorecapelli = value; }
+            return presenze;
         }
+    
 
-        public float Costituzione
-        {
-            get { return costituzione; }
-            set { costituzione = value; }
-        }
-
-        public string Presenze
-        {
-            get { return presenze; }
-            set { presenze = value; }
-        }
-
+        //PROPRIETA'
+        /*
+                public string Nome
+                {
+                   get { return Nome; }
+                   set { Nome = value; }
+                }
+                */
     }
 
-    
+
 }

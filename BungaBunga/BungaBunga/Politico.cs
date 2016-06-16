@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BungaBunga
 {
    public class Politico : Persona
-    {
+    {      
         //COSTRUTTORE
         public Politico(string name, char sex, int money, int age, int height, int weight, float hair, float costitution, string presence) {
             nome=name;
