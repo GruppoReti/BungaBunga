@@ -50,10 +50,10 @@ namespace BungaBunga
                     assegna_caratteristiche(strings);
                     Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
 
-                    // if (verifica_Persona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
-                    // {
-                    //   introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
-                    // }
+                     if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
+                     {
+                       introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                     }
 
                     //else Console.WriteLine("Dati della persona non conformi agli standard");
 
@@ -216,12 +216,13 @@ namespace BungaBunga
 
         }
 
-        private bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
+        private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
             int check = 0;
             string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
             string[] sessi = { "M", "F" };
-            string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
+            //string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
+            string giornisettimana ="LMEGVSD";
             int[] range_età = { 17, 18, 19, 20, 21, 22, 23, 24 };
             int counter = 0;
 
@@ -254,7 +255,7 @@ namespace BungaBunga
             }
 
             // check denaro
-            if (denaro % 2 == 0)
+       /*   if (denaro- Math.Truncate(denaro))
             {
                 check = check + 1;
             }
@@ -262,7 +263,7 @@ namespace BungaBunga
             {
                 Console.WriteLine("Il campo \"denaro\" non è un intero");
                 return false;
-            }
+            }*/
 
             // check età
 
@@ -283,7 +284,7 @@ namespace BungaBunga
 
             // check altezza
 
-            if (altezza % 2 == 0 && altezza > 130 && altezza < 220)
+            if (altezza > 130 && altezza < 220)
             {
                 check = check + 1;
             }
@@ -296,13 +297,13 @@ namespace BungaBunga
 
             // check peso
 
-            if (peso % 2 == 0 && peso > 10 && peso < 500)
+            if (peso > 10 && peso < 500)
             {
                 check = check + 1;
             }
             else
             {
-                Console.WriteLine("Il campo \"peso\" inserito {0} non è un numero intero oppure non è in kg", altezza);
+                Console.WriteLine("Il campo \"peso\" inserito {0} non è un numero intero oppure non è in kg", peso);
                 return false;
             }
 
@@ -333,11 +334,12 @@ namespace BungaBunga
             //check giorni settimana
 
             counter = 0;
-            for (int i = 0; i < giornisettimana.Length; i++)
+            for (int i = 0; i < presenze.Length; i++)
             {
-                if (presenze.IndexOf(giornisettimana[i]) == -1)
+                // if (presenze.IndexOf(giornisettimana[i]) == -1)
+                if (!giornisettimana.Contains(presenze[i]))
                 {
-                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", giornisettimana[i]);
+                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", presenze[i]);
                     return false;
                 }
                 else
