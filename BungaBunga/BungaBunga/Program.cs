@@ -7,9 +7,9 @@ namespace BungaBunga
 {
     class Program 
     {
-        private List<Politico> ListaPolitici = new List<Politico>();
-        private List<Escort> ListaEscort = new List<Escort>();
-        private List<Persona> ListaNera = new List<Persona>();
+        private static List<Politico> ListaPolitici = new List<Politico>();
+        private static List<Escort> ListaEscort = new List<Escort>();
+        private static List<Persona> ListaNera = new List<Persona>();
 
         private static string nome;
         private static char sesso;
@@ -30,10 +30,8 @@ namespace BungaBunga
             Console.WriteLine(pg.CalcolaAffinità(P,E));
             //fine test affinità
             
-            int counter = 0;
             string line;
             string evento;
-            
 
             string path = @"C:\Users\rebolan1\Desktop\provaBunga.txt";
            // string fileName ="provaBunga.txt";
@@ -49,25 +47,15 @@ namespace BungaBunga
 
                 if (evento == "in")
                 {
+                    assegna_caratteristiche(strings);
+                    Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
 
-                    nome = strings[1];
-                    sesso = System.Convert.ToChar(strings[2]);
-                    denaro = System.Convert.ToInt32(strings[3]);
-                    eta = System.Convert.ToInt32(strings[4]);
-                    altezza = System.Convert.ToInt32(strings[5]);
-                    peso = System.Convert.ToInt32(strings[6]);
-                    capelli = (float)System.Convert.ToDouble(strings[7]);
-                    costituzione = (float)System.Convert.ToDouble(strings[8]);
-                    presenze = strings[9];
-
-                    Console.WriteLine("Introdotta alla festa {0}", nome);
-
-                    /* if (verifica_Persona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
-                     {
-                         introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
-                     }
+                    // if (verifica_Persona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
+                    // {
+                    //   introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                    // }
     
-                    else Console.WriteLine("Dati della persona non conformi agli standard");*/
+                    //else Console.WriteLine("Dati della persona non conformi agli standard");
 
                 }
 
@@ -81,8 +69,7 @@ namespace BungaBunga
                     Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avverranno {1} donazioni", Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
                 }
                 
-
-                counter++;
+                
             }
 
             file.Close();
@@ -90,6 +77,20 @@ namespace BungaBunga
             Console.ReadKey();
             
 
+        }
+
+
+        public static void assegna_caratteristiche(string[] strings) {
+
+            nome = strings[1];
+            sesso = System.Convert.ToChar(strings[2]);
+            denaro = System.Convert.ToInt32(strings[3]);
+            eta = System.Convert.ToInt32(strings[4]);
+            altezza = System.Convert.ToInt32(strings[5]);
+            peso = System.Convert.ToInt32(strings[6]);
+            capelli = (float)System.Convert.ToDouble(strings[7]);
+            costituzione = (float)System.Convert.ToDouble(strings[8]);
+            presenze = strings[9];
         }
 
 
