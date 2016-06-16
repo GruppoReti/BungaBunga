@@ -6,35 +6,30 @@ using System.Threading.Tasks;
 
 namespace BungaBunga
 {
-    class Program : Iestrometti, Ibungabunga, Iintroduci
+    class Program
     {
-        private List<Politico> ListaPolitici = new List<Politico>();
-        private List<Escort> ListaEscort = new List<Escort>();
-        private List<Persona> ListaNera = new List<Persona>();
+        private static List<Politico> ListaPolitici = new List<Politico>();
+        private static List<Escort> ListaEscort = new List<Escort>();
+        private static List<Persona> ListaNera = new List<Persona>();
 
         static void Main(string[] args)
         {   
             //test GeneraOrgie
-            Program pg = new Program();
             Politico P = new Politico("Berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
             Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
             Politico P2 = new Politico("Bossi", 'M', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
             Escort E2 = new Escort("Cicciolina", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-            Politico P3 = new Politico("Brunetta", 'M', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-            Escort E3 = new Escort("Belen", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Politico P3 = new Politico("Brunetta", 'M', 20000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Escort E3 = new Escort("Belen", 'F', 20000, 17, 170, 60, (float)0.5, (float)0.5, "E");
 
-            List<Tuple<Politico, Escort>> listaprova = new List<Tuple<Politico, Escort>>();
-            listaprova.Add(Tuple.Create(P3, E));
-            listaprova.Add(Tuple.Create(P3, E2));
-            listaprova.Add(Tuple.Create(P3, E3));
-            for (int j = 0; j < pg.GeneraOrgie(listaprova).Count; j++)
-            {
-                for (int i = 0; i < pg.GeneraOrgie(listaprova)[j].Count; i++)
-                {
-                    Console.Write("{0} ",pg.GeneraOrgie(listaprova)[j][i].GetNome());
-                }
-                Console.WriteLine();
-            }
+            ListaPolitici.Add(P);
+            ListaPolitici.Add(P2);
+            ListaPolitici.Add(P3);
+            
+            ListaEscort.Add(E);
+            ListaEscort.Add(E2);
+            ListaEscort.Add(E3);
+            bungabunga('E', 5);
             //fine test GeneraOrgie
             Console.ReadKey();
         }
@@ -83,26 +78,67 @@ namespace BungaBunga
 
 
 
-        public void bungabunga(char giorno, int Naccoppiamenti)
+        public static void bungabunga(char giorno, int Naccoppiamenti)  
         {
-            List<Tuple<Politico, Escort, float>> ListaDiAffinità = new List<Tuple<Politico, Escort, float>>();
+
+            //verifica dati inseriti
+
+            //(TO BE DONE)
+
+            //creiamo, sulla base del giorno in unput, le sottoliste di Politici ed Escort che possono partecipare
+
+            List<Politico> SottoListaPolitici = new List<Politico>();
+            for(int i = 0; i < ListaPolitici.Count; i++)
+            {
+                if (ListaPolitici[i].GetPresenze().Contains(giorno.ToString()))
+                {
+                    SottoListaPolitici.Add(ListaPolitici[i]);
+                }
+            }
+            List<Escort> SottoListaEscort = new List<Escort>();
+            for (int i = 0; i < ListaEscort.Count; i++)
+            {
+                if (ListaEscort[i].GetPresenze().Contains(giorno.ToString()))
+                {
+                    SottoListaEscort.Add(ListaEscort[i]);
+                }
+            }
             //per ogni possibile coppia Politico-Escort calcoliamo la discrepanza secondo le indicazioni del testo, e generiamo una Tupla <Politico, Escort, float> da inserire nella lista
 
-            //ultimata la generazione della lista, la riordiniamo per discrepanza
+            List<Tuple<Politico, Escort, float>> ListaDiAffinità = new List<Tuple<Politico, Escort, float>>();
+
+            for (int j = 0; j < SottoListaPolitici.Count; j++)
+            {
+                for (int i = 0; i < SottoListaEscort.Count; i++)
+                {
+                    ListaDiAffinità.Add(Tuple.Create(SottoListaPolitici[j], SottoListaEscort[i],CalcolaAffinità(SottoListaPolitici[j], SottoListaEscort[i])));
+                }
+            }
+            //ultimata la generazione della lista, la riordiniamo per discrepanza crescente (così che i primi N elementi siano quelli da considerare)
+            List<Tuple<Politico, Escort, float>> ListaDiAffinitàOrdinata =ListaDiAffinità.OrderBy(x => x.Item3).ToList();
+
 
             //consideriamo solo gli Naccoppiamenti migliori della lista
 
+            List<Tuple<Politico, Escort>> ListaCoppie = new List<Tuple<Politico, Escort>>();
+            for(int i=0; i<Naccoppiamenti; i++)
+            {
+                ListaCoppie.Add(Tuple.Create(ListaDiAffinitàOrdinata[i].Item1,ListaDiAffinitàOrdinata[i].Item2));
+            }
             //chiamiamo la funzione "GeneraOrgie" per calcolare il numero di gruppetti che si vengono a formare
 
+            List<List<Persona>> ListaDiGruppi = GeneraOrgie(ListaCoppie);
+
             //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
+            TrovaOrgione(ListaDiGruppi);
         }
 
 
 
-        private double CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
+        private static float CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
         {
-            double Discrepanza = 0;
-            double[] importanza = {0.0009, 1.0, 0.1, 0.15, 0.5, 2.0};
+            float Discrepanza = 0;
+            float[] importanza = {(float)0.0009, (float)1.0, (float)0.1, (float)0.15, (float)0.5, (float)2.0 };
             Discrepanza = Math.Abs(P.GetDenaro() - E.GetDenaro()) * importanza[0] + Math.Abs(P.GetEtà() - E.GetEtà()) * importanza[1] + Math.Abs(P.GetAltezza() - E.GetAltezza()) * importanza[2] + Math.Abs(P.GetPeso() - E.GetPeso()) * importanza[3] + Math.Abs(P.GetColoreCapelli() - E.GetColoreCapelli()) * importanza[4] + Math.Abs(P.GetCostituzione() - E.GetCostituzione()) * importanza[5];
             return Discrepanza;
         }
@@ -121,10 +157,13 @@ namespace BungaBunga
             return tupla;
         }
 
-        private List<List<Persona>> GeneraOrgie(List<Tuple<Politico,Escort>> ListaCoppie)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
+
+        /////////NB: AL MOMENTO GENERA ORGIE E' BACATA! ->non tiene conto che la coppia di congiunzione tra 2 coppie, potrebbe arrivare successivamente....
+        private static List<List<Persona>> GeneraOrgie(List<Tuple<Politico,Escort>> ListaCoppie)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
         {
             List<List<Persona>> ListaDiGruppi = new List<List<Persona>>();
-            for(int i=0; i < ListaCoppie.Count(); i++)  //ciclo su ogni elemento della lista di coppie
+            
+            for (int i = 0; i < ListaCoppie.Count(); i++)  //ciclo su ogni elemento della lista di coppie
             {
                 bool CoppiaAggiunta = false;  //flag per segnalare se la coppia ha trovato la stanza a cui partecipare
                 for (int j = 0; j < ListaDiGruppi.Count(); j++) {   //ciclo su ogni elemento dell'attuale lista di stanze
@@ -143,19 +182,45 @@ namespace BungaBunga
                 } // fine ciclo sulle stanze già esistenti
                 if (!CoppiaAggiunta) //se la coppia non può partecipare ad una stanza già esistente, creo una nuova stanza con i due elementi della coppia
                 {
-                    List < Persona >  Gruppo = new List<Persona>();
+                    List<Persona> Gruppo = new List<Persona>();
                     Gruppo.Add(ListaCoppie[i].Item1);
                     Gruppo.Add(ListaCoppie[i].Item2);
                     ListaDiGruppi.Add(Gruppo);
                 }
-
+                /////////////STAMPA GRUPPI PER DEBUG ////////////////////////
+                for (int k = 0; k < ListaDiGruppi.Count; k++)
+                {
+                    for (int j = 0; j < ListaDiGruppi[k].Count; j++)
+                    {
+                        Console.Write(" {0}", ListaDiGruppi[k][j].GetNome());
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine("----------------------------------------");
+                /////////////FINE STAMPA GRUPPI PER DEBUG////////////////////
             }
+
             return ListaDiGruppi;
         }
 
-        private void TrovaOrgione()
+        private static void TrovaOrgione(List<List<Persona>> ListaDiGruppi)
         {
+            int NPolitici = 0;
+            int NEscort = 0;
+            int max = 0;
+            int indicemax = 0;
+            for (int i = 0; i < ListaDiGruppi.Count; i++)
+            {
+                if (ListaDiGruppi[i].Count > max)
+                {
+                    max = ListaDiGruppi[i].Count;
+                    indicemax = i;
+                    NPolitici = ListaDiGruppi[i].Count(x=>x.GetSesso()=='M');
+                    NEscort = max - NPolitici;
+                }
+            }
 
+            Console.WriteLine("{0} {1} {2}",ListaDiGruppi.Count,NPolitici,NEscort);
         }
 
     }
