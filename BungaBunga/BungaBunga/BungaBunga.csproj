@@ -59,9 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Escort.cs" />
-    <Compile Include="Ibungabunga.cs" />
-    <Compile Include="Iestrometti.cs" />
-    <Compile Include="Iintroduci.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Politico.cs" />
     <Compile Include="Program.cs" />
