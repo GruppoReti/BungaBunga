@@ -10,6 +10,8 @@ namespace BungaBunga
     {
         private List<Politico> ListaPolitici = new List<Politico>();
         private List<Escort> ListaEscort = new List<Escort>();
+        private List<Politico> ListaNera_Politici = new List<Politico>();
+        private List<Escort> ListaNera_Escort = new List<Escort>();
 
         static void Main(string[] args)
         {   
@@ -21,20 +23,7 @@ namespace BungaBunga
             //fine test affinità
             Console.ReadKey();
 
-           /*estrai una riga da file
-            * if(prima_parola_da_file==in) {
-            * Politico P = new Politico;
-            * introduci_politico(specifiche_da_file);
-            * ListaPolitici.Add(P)
-            * }
-            * 
-            * if(prima_parola_da_file==out){
-            * estrometti(seconda_parola_in_file)
-            * }
-            * 
-            * 
-            * 
-            */
+         
 
         }
         
@@ -44,28 +33,42 @@ namespace BungaBunga
             //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
             if (sesso == 'M')
             {
-                ListaPolitici.Add(new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
+                Politico P = new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
+                if(!(ListaNera_Politici.Contains(P) || ListaPolitici.Contains(P))) ListaPolitici.Add(P); 
+                //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
             }
             else
             {
+                Escort E = new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
                 ListaEscort.Add(new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
+                if (!(ListaNera_Escort.Contains(E) || ListaEscort.Contains(E))) ListaEscort.Add(E);
             }
 
 
         }
-
-
-
-
+        
+        
         public void estrometti(string nome)
         {
 
-            var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.Nome == nome); // controlla se il soggetto è già presente nella lista
-            if (politico_estromesso != null) ListaPolitici.Remove(politico_estromesso);  // elimina il soggetto dalla lista
+            var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.GetNome() == nome); // controlla se il soggetto è già presente nella lista
+            if (politico_estromesso != null)
+            {
+                ListaPolitici.Remove(politico_estromesso);  // elimina il soggetto dalla lista
+                ListaNera_Politici.Add(politico_estromesso); //aggiungo il soggetto alla black list
+            }
 
-            var escort_estromessa = ListaEscort.SingleOrDefault(x => x.Nome == nome);
-            if (escort_estromessa != null) ListaEscort.Remove(escort_estromessa);
-            
+            else
+            {
+                var escort_estromessa = ListaEscort.SingleOrDefault(x => x.GetNome() == nome);
+                if (escort_estromessa != null)
+                {
+                    ListaEscort.Remove(escort_estromessa);
+                    ListaNera_Escort.Add(escort_estromessa);
+                }
+
+            }
+
         }
 
 
