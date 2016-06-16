@@ -10,12 +10,14 @@ namespace BungaBunga
     {
         private List<Politico> ListaPolitici = new List<Politico>();
         private List<Escort> ListaEscort = new List<Escort>();
+        private List<Politico> ListaNera_Politici = new List<Politico>();
+        private List<Escort> ListaNera_Escort = new List<Escort>();
 
         static void Main(string[] args)
         {   
             //test GeneraOrgie
             Program pg = new Program();
-            Politico P = new Politico("berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
+            Politico P = new Politico("Berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
             Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
             Politico P2 = new Politico("Bossi", 'M', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
             Escort E2 = new Escort("Cicciolina", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
@@ -36,30 +38,51 @@ namespace BungaBunga
             }
             //fine test GeneraOrgie
             Console.ReadKey();
+
+
+
         }
-
-
+        
 
         public void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
         {   
             //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
+
             if (sesso == 'M')
             {
-                ListaPolitici.Add(new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
+                Politico P = new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
+                if(!(ListaNera_Politici.Contains(P) || ListaPolitici.Contains(P))) ListaPolitici.Add(P); 
+                //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
             }
             else
             {
+                Escort E = new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
                 ListaEscort.Add(new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze));
+                if (!(ListaNera_Escort.Contains(E) || ListaEscort.Contains(E))) ListaEscort.Add(E);
             }
-
-
         }
-
-
 
 
         public void estrometti(string nome)
         {
+
+            var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.GetNome() == nome); // controlla se il soggetto è già presente nella lista
+            if (politico_estromesso != null)
+            {
+                ListaPolitici.Remove(politico_estromesso);  // elimina il soggetto dalla lista
+                ListaNera_Politici.Add(politico_estromesso); //aggiungo il soggetto alla black list
+            }
+
+            else
+            {
+                var escort_estromessa = ListaEscort.SingleOrDefault(x => x.GetNome() == nome);
+                if (escort_estromessa != null)
+        {
+                    ListaEscort.Remove(escort_estromessa);
+                    ListaNera_Escort.Add(escort_estromessa);
+                }
+
+            }
 
         }
 
@@ -71,12 +94,15 @@ namespace BungaBunga
             //per ogni possibile coppia Politico-Escort calcoliamo la discrepanza secondo le indicazioni del testo, e generiamo una Tupla <Politico, Escort, float> da inserire nella lista
 
             //ultimata la generazione della lista, la riordiniamo per discrepanza
-
             //consideriamo solo gli Naccoppiamenti migliori della lista
-
             //chiamiamo la funzione "GeneraOrgie" per calcolare il numero di gruppetti che si vengono a formare
-
             //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
+
+
+
+
+
+
         }
 
 
