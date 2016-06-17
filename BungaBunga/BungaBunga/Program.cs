@@ -34,7 +34,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\rebolan1\Desktop\provaBunga.txt";
+            string path = @"C:\Users\milinlo1\Desktop\provaBunga.txt";
             // string fileName ="provaBunga.txt";
 
             System.IO.StreamReader file = new System.IO.StreamReader(path);
@@ -59,13 +59,13 @@ namespace BungaBunga
                    // else Console.WriteLine("Dati della persona non conformi agli standard");
                 }
 
-                if (evento == "out")
+                else if (evento == "out")
                 {
                     estrometti(strings[1]);
                     Console.WriteLine("Estromissione della persona: {0}", strings[1]);
                 }
 
-                if (evento == "bungabunga")
+                else if (evento == "bungabunga")
                 {
                     bungabunga(Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
                     Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avverranno {1} donazioni", Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
@@ -312,7 +312,8 @@ namespace BungaBunga
             int check = 0;
             string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
             string[] sessi = { "M", "F" };
-            string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
+            //string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
+            string giornisettimana = "LMEGVSD";
             int[] range_età = { 17, 18, 19, 20, 21, 22, 23, 24 };
             int counter = 0;
 
@@ -322,7 +323,7 @@ namespace BungaBunga
             {
                 if (nome.IndexOf(simbolinonpermessi[i]) == -1)
                 {
-                    //counter = counter + 1;
+                    //
                 }
                 else
                 {
@@ -345,22 +346,22 @@ namespace BungaBunga
             }
 
             // check denaro
-            if (denaro % 2 == 0)
-            {
-                check = check + 1;
-            }
-            else
-            {
-                Console.WriteLine("Il campo \"denaro\" non è un intero");
-                return false;
-            }
+            /*   if (denaro- Math.Truncate(denaro))
+                 {
+                     check = check + 1;
+                 }
+                 else
+                 {
+                     Console.WriteLine("Il campo \"denaro\" non è un intero");
+                     return false;
+                 }*/
 
             // check età
 
             counter = 0;
             for (int i = 0; i < range_età.Length; i++)
             {
-                if (età == range_età[i] && età % 2 == 0)
+                if (età == range_età[i])
                 {
                     check = check + 1;
                     counter = counter + 1;
@@ -368,32 +369,32 @@ namespace BungaBunga
             }
             if (counter == range_età.Length)
             {
-                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni) oppure non è un numero intero", età);
+                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni)", età);
                 return false;
             }
 
             // check altezza
 
-            if (altezza % 2 == 0 && altezza > 130 && altezza < 220)
+            if (altezza > 130 && altezza < 220)
             {
                 check = check + 1;
             }
             else
             {
-                Console.WriteLine("Il campo \"altezza\" inserito {0} non è un numero intero oppure non è in cm", altezza);
+                Console.WriteLine("Il campo \"altezza\" inserito {0} non è in cm", altezza);
                 return false;
             }
 
 
             // check peso
 
-            if (peso % 2 == 0 && peso > 10 && peso < 500)
+            if (peso > 10 && peso < 500)
             {
                 check = check + 1;
             }
             else
             {
-                Console.WriteLine("Il campo \"peso\" inserito {0} non è un numero intero oppure non è in kg", altezza);
+                Console.WriteLine("Il campo \"peso\" inserito {0} non è in kg", peso);
                 return false;
             }
 
@@ -401,7 +402,7 @@ namespace BungaBunga
 
             if (colorecapelli < 0.0 && colorecapelli > 1.0)
             {
-                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 -1.0)", colorecapelli);
+                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
                 return false;
             }
             else
@@ -424,11 +425,12 @@ namespace BungaBunga
             //check giorni settimana
 
             counter = 0;
-            for (int i = 0; i < giornisettimana.Length; i++)
+            for (int i = 0; i < presenze.Length; i++)
             {
-                if (presenze.IndexOf(giornisettimana[i]) == -1)
+                // if (presenze.IndexOf(giornisettimana[i]) == -1)
+                if (!giornisettimana.Contains(presenze[i]))
                 {
-                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", giornisettimana[i]);
+                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", presenze[i]);
                     return false;
                 }
                 else
@@ -450,6 +452,5 @@ namespace BungaBunga
                 return false;
             }
         }
-
     }
 }
