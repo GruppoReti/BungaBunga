@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BungaBunga
 {
@@ -24,10 +26,9 @@ namespace BungaBunga
         static void Main(string[] args)
         {
             //test GeneraOrgie
-            Program pg = new Program();
             Politico P = new Politico("Berlusconi", 'M', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
             Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-            Console.WriteLine(pg.CalcolaAffinità(P, E));
+            Console.WriteLine(CalcolaAffinità(P, E));
             //fine test affinità
 
             string line;
@@ -50,10 +51,10 @@ namespace BungaBunga
                     assegna_caratteristiche(strings);
                     Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
 
-                     if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
-                     {
-                       introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
-                     }
+                    if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
+                    {
+                        introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                    }
 
                    // else Console.WriteLine("Dati della persona non conformi agli standard");
                 }
@@ -80,6 +81,29 @@ namespace BungaBunga
 
         }
 
+        /*
+        static void Main(string[] args)
+        {   
+            //test GeneraOrgie
+            Politico P = new Politico("Berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
+            Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Politico P2 = new Politico("Bossi", 'M', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Escort E2 = new Escort("Cicciolina", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Politico P3 = new Politico("Brunetta", 'M', 20000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+            Escort E3 = new Escort("Belen", 'F', 20000, 17, 170, 60, (float)0.5, (float)0.5, "E");
+
+            ListaPolitici.Add(P);
+            ListaPolitici.Add(P2);
+            ListaPolitici.Add(P3);
+            
+            ListaEscort.Add(E);
+            ListaEscort.Add(E2);
+            ListaEscort.Add(E3);
+            bungabunga('E', 5);
+            //fine test GeneraOrgie
+            Console.ReadKey();
+        }*/
+
 
         public static void assegna_caratteristiche(string[] strings)
         {
@@ -95,15 +119,14 @@ namespace BungaBunga
             presenze = strings[9];
         }
 
-
-        public static void introduci(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
-        {
+        public static void introduci(string nome,char sesso,int denaro,int età,int altezza,int peso,float colorecapelli,float costituzione,string presenze)
+        {   
             //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
 
             if (sesso == 'M')
             {
                 Politico P = new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                if (!(ListaNera.Contains(P) || ListaPolitici.Contains(P))) ListaPolitici.Add(P);
+                if(!(ListaNera.Contains(P) || ListaPolitici.Contains(P))) ListaPolitici.Add(P); 
                 //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
             }
             else
@@ -139,33 +162,74 @@ namespace BungaBunga
 
 
 
-        public static void bungabunga(char giorno, int Naccoppiamenti)
+        public static void bungabunga(char giorno, int Naccoppiamenti)  
         {
-            List<Tuple<Politico, Escort, float>> ListaDiAffinità = new List<Tuple<Politico, Escort, float>>();
+
+            //verifica dati inseriti
+
+            //(TO BE DONE)
+
+            //creiamo, sulla base del giorno in unput, le sottoliste di Politici ed Escort che possono partecipare
+
+            List<Politico> SottoListaPolitici = new List<Politico>();
+            for(int i = 0; i < ListaPolitici.Count; i++)
+            {
+                if (ListaPolitici[i].GetPresenze().Contains(giorno.ToString()))
+                {
+                    SottoListaPolitici.Add(ListaPolitici[i]);
+                }
+            }
+            List<Escort> SottoListaEscort = new List<Escort>();
+            for (int i = 0; i < ListaEscort.Count; i++)
+            {
+                if (ListaEscort[i].GetPresenze().Contains(giorno.ToString()))
+                {
+                    SottoListaEscort.Add(ListaEscort[i]);
+                }
+            }
             //per ogni possibile coppia Politico-Escort calcoliamo la discrepanza secondo le indicazioni del testo, e generiamo una Tupla <Politico, Escort, float> da inserire nella lista
 
-            //ultimata la generazione della lista, la riordiniamo per discrepanza
+            List<Tuple<Politico, Escort, float>> ListaDiAffinità = new List<Tuple<Politico, Escort, float>>();
+
+            for (int j = 0; j < SottoListaPolitici.Count; j++)
+            {
+                for (int i = 0; i < SottoListaEscort.Count; i++)
+                {
+                    ListaDiAffinità.Add(Tuple.Create(SottoListaPolitici[j], SottoListaEscort[i],CalcolaAffinità(SottoListaPolitici[j], SottoListaEscort[i])));
+                }
+            }
+            //ultimata la generazione della lista, la riordiniamo per discrepanza crescente (così che i primi N elementi siano quelli da considerare)
+            List<Tuple<Politico, Escort, float>> ListaDiAffinitàOrdinata =ListaDiAffinità.OrderBy(x => x.Item3).ToList();
+
 
             //consideriamo solo gli Naccoppiamenti migliori della lista
 
+            List<Tuple<Politico, Escort>> ListaCoppie = new List<Tuple<Politico, Escort>>();
+            for(int i=0; i<Naccoppiamenti; i++)
+            {
+                ListaCoppie.Add(Tuple.Create(ListaDiAffinitàOrdinata[i].Item1,ListaDiAffinitàOrdinata[i].Item2));
+            }
             //chiamiamo la funzione "GeneraOrgie" per calcolare il numero di gruppetti che si vengono a formare
 
+            List<List<Persona>> ListaDiGruppi = GeneraOrgie(ListaCoppie);
+
             //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
+            TrovaOrgione(ListaDiGruppi);
         }
 
 
 
-        private double CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
+        private static float CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
         {
-            double Discrepanza = 0;
-            double[] importanza = { 0.0009, 1.0, 0.1, 0.15, 0.5, 2.0 };
+            float Discrepanza = 0;
+            float[] importanza = {(float)0.0009, (float)1.0, (float)0.1, (float)0.15, (float)0.5, (float)2.0 };
             Discrepanza = Math.Abs(P.GetDenaro() - E.GetDenaro()) * importanza[0] + Math.Abs(P.GetEtà() - E.GetEtà()) * importanza[1] + Math.Abs(P.GetAltezza() - E.GetAltezza()) * importanza[2] + Math.Abs(P.GetPeso() - E.GetPeso()) * importanza[3] + Math.Abs(P.GetColoreCapelli() - E.GetColoreCapelli()) * importanza[4] + Math.Abs(P.GetCostituzione() - E.GetCostituzione()) * importanza[5];
             return Discrepanza;
         }
 
 
 
-        private Tuple<string, string> LeggiIstruzione(int n)  //legge l'istruzione alla riga n-esima nel file di input e la restituisce interpretata nella forma di Tupla <(IDevento), (parametri)>
+        private Tuple<string,string> LeggiIstruzione(int n)  //legge l'istruzione alla riga n-esima nel file di input e la restituisce interpretata nella forma di Tupla <(IDevento), (parametri)>
         {
             string istruzione = null;
             string parametri = null;
@@ -177,14 +241,16 @@ namespace BungaBunga
             return tupla;
         }
 
-        private List<List<Persona>> GeneraOrgie(List<Tuple<Politico, Escort>> ListaCoppie)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
+
+        /////////NB: AL MOMENTO GENERA ORGIE E' BACATA! ->non tiene conto che la coppia di congiunzione tra 2 coppie, potrebbe arrivare successivamente....
+        private static List<List<Persona>> GeneraOrgie(List<Tuple<Politico,Escort>> ListaCoppie)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
         {
             List<List<Persona>> ListaDiGruppi = new List<List<Persona>>();
+            
             for (int i = 0; i < ListaCoppie.Count(); i++)  //ciclo su ogni elemento della lista di coppie
             {
                 bool CoppiaAggiunta = false;  //flag per segnalare se la coppia ha trovato la stanza a cui partecipare
-                for (int j = 0; j < ListaDiGruppi.Count(); j++)
-                {   //ciclo su ogni elemento dell'attuale lista di stanze
+                for (int j = 0; j < ListaDiGruppi.Count(); j++) {   //ciclo su ogni elemento dell'attuale lista di stanze
                     if (ListaDiGruppi[j].Contains(ListaCoppie[i].Item1) && !ListaDiGruppi[j].Contains(ListaCoppie[i].Item2))  //se nel gruppo j-esimo è già presente il politico(della coppia i-esima), ma non la escort (della coppia i-esima) allora la aggiungo al gruppo j-esimo
                     {
                         ListaDiGruppi[j].Add(ListaCoppie[i].Item2); //Escort
@@ -205,14 +271,40 @@ namespace BungaBunga
                     Gruppo.Add(ListaCoppie[i].Item2);
                     ListaDiGruppi.Add(Gruppo);
                 }
-
+                /////////////STAMPA GRUPPI PER DEBUG ////////////////////////
+                for (int k = 0; k < ListaDiGruppi.Count; k++)
+                {
+                    for (int j = 0; j < ListaDiGruppi[k].Count; j++)
+                    {
+                        Console.Write(" {0}", ListaDiGruppi[k][j].GetNome());
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine("----------------------------------------");
+                /////////////FINE STAMPA GRUPPI PER DEBUG////////////////////
             }
+
             return ListaDiGruppi;
         }
 
-        private void TrovaOrgione()
+        private static void TrovaOrgione(List<List<Persona>> ListaDiGruppi)
         {
+            int NPolitici = 0;
+            int NEscort = 0;
+            int max = 0;
+            int indicemax = 0;
+            for (int i = 0; i < ListaDiGruppi.Count; i++)
+            {
+                if (ListaDiGruppi[i].Count > max)
+                {
+                    max = ListaDiGruppi[i].Count;
+                    indicemax = i;
+                    NPolitici = ListaDiGruppi[i].Count(x=>x.GetSesso()=='M');
+                    NEscort = max - NPolitici;
+                }
+            }
 
+            Console.WriteLine("{0} {1} {2}",ListaDiGruppi.Count,NPolitici,NEscort);
         }
 
         private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
@@ -220,8 +312,7 @@ namespace BungaBunga
             int check = 0;
             string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
             string[] sessi = { "M", "F" };
-            //string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
-            string giornisettimana ="LMEGVSD";
+            string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
             int[] range_età = { 17, 18, 19, 20, 21, 22, 23, 24 };
             int counter = 0;
 
@@ -254,7 +345,7 @@ namespace BungaBunga
             }
 
             // check denaro
-       /*   if (denaro- Math.Truncate(denaro))
+            if (denaro % 2 == 0)
             {
                 check = check + 1;
             }
@@ -262,7 +353,7 @@ namespace BungaBunga
             {
                 Console.WriteLine("Il campo \"denaro\" non è un intero");
                 return false;
-            }*/
+            }
 
             // check età
 
@@ -283,7 +374,7 @@ namespace BungaBunga
 
             // check altezza
 
-            if (altezza > 130 && altezza < 220)
+            if (altezza % 2 == 0 && altezza > 130 && altezza < 220)
             {
                 check = check + 1;
             }
@@ -296,13 +387,13 @@ namespace BungaBunga
 
             // check peso
 
-            if (peso > 10 && peso < 500)
+            if (peso % 2 == 0 && peso > 10 && peso < 500)
             {
                 check = check + 1;
             }
             else
             {
-                Console.WriteLine("Il campo \"peso\" inserito {0} non è un numero intero oppure non è in kg", peso);
+                Console.WriteLine("Il campo \"peso\" inserito {0} non è un numero intero oppure non è in kg", altezza);
                 return false;
             }
 
@@ -333,12 +424,11 @@ namespace BungaBunga
             //check giorni settimana
 
             counter = 0;
-            for (int i = 0; i < presenze.Length; i++)
+            for (int i = 0; i < giornisettimana.Length; i++)
             {
-                // if (presenze.IndexOf(giornisettimana[i]) == -1)
-                if (!giornisettimana.Contains(presenze[i]))
+                if (presenze.IndexOf(giornisettimana[i]) == -1)
                 {
-                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", presenze[i]);
+                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", giornisettimana[i]);
                     return false;
                 }
                 else
@@ -360,6 +450,6 @@ namespace BungaBunga
                 return false;
             }
         }
+
     }
 }
-
