@@ -55,8 +55,7 @@ namespace BungaBunga
                        introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
                      }
 
-                    //else Console.WriteLine("Dati della persona non conformi agli standard");
-
+                   // else Console.WriteLine("Dati della persona non conformi agli standard");
                 }
 
                 if (evento == "out")
@@ -117,7 +116,7 @@ namespace BungaBunga
 
         public static void estrometti(string nome)
         {
-
+            
             var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.GetNome() == nome); // controlla se il soggetto è già presente nella lista
             if (politico_estromesso != null)
             {
