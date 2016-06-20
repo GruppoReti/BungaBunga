@@ -30,7 +30,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\castese1\Desktop\provaBungaFuoriRange.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBunga.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -63,8 +63,8 @@ namespace BungaBunga
 
                 else if (evento == "bungabunga")
                 {
-                    int NaccopiamentiAvvenuti = bungabunga(Convert.ToChar(strings[1]), Convert.ToInt32(strings[2]));
-                    Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avvenute {1} donazioni", Convert.ToChar(strings[1]), NaccopiamentiAvvenuti);
+                    bungabunga(Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
+                    Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avverranno {1} donazioni", Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
                 }
 
 
@@ -76,8 +76,8 @@ namespace BungaBunga
 
         }
 
-   //    MAIN DI TEST SEBA
- /*       static void Main(string[] args)
+   /*     MAIN DI TEST SEBA
+        static void Main(string[] args)
         {   
             //test GeneraOrgie
             Politico P = new Politico("Berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
@@ -94,12 +94,12 @@ namespace BungaBunga
             ListaEscort.Add(E);
             ListaEscort.Add(E2);
             ListaEscort.Add(E3);
-            bungabunga('E', 5);
+            bungabunga('E', 3);
             //fine test GeneraOrgie
             Console.ReadKey();
         }
-*/
 
+*/
         public static void assegna_caratteristiche(string[] strings)
         {
 
@@ -157,10 +157,9 @@ namespace BungaBunga
 
 
 
-        public static int bungabunga(char giorno, int Naccoppiamenti)  
+        public static void bungabunga(char giorno, int Naccoppiamenti)  
         {
 
-            //creiamo, sulla base del giorno in unput, le sottoliste di Politici ed Escort che possono partecipare
 
             List<Politico> SottoListaPolitici = new List<Politico>();
             for(int i = 0; i < ListaPolitici.Count; i++)
@@ -178,19 +177,6 @@ namespace BungaBunga
                     SottoListaEscort.Add(ListaEscort[i]);
                 }
             }
-
-
-            //verifica dati inseriti
-
-            if (SottoListaPolitici.Count * SottoListaEscort.Count < Naccoppiamenti)
-            {
-                Naccoppiamenti = SottoListaPolitici.Count * SottoListaEscort.Count;
-                if (Naccoppiamenti == 0)
-                {
-                    return Naccoppiamenti;
-                }
-            }
-
             //per ogni possibile coppia Politico-Escort calcoliamo la discrepanza secondo le indicazioni del testo, e generiamo una Tupla <Politico, Escort, float> da inserire nella lista
 
             List<Tuple<Politico, Escort, float>> ListaDiAffinità = new List<Tuple<Politico, Escort, float>>();
@@ -219,7 +205,6 @@ namespace BungaBunga
 
             //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
             TrovaOrgione(ListaDiGruppi);
-            return Naccoppiamenti;
         }
 
 
@@ -266,7 +251,7 @@ namespace BungaBunga
                     }
                 }
             }
-            /////////////STAMPA GRUPPI PER DEBUG ////////////////////////
+            /////////////   STAMPA GRUPPI PER DEBUG ////////////////////////
             for (int k = 0; k < ListaDiGruppi.Count; k++)
             {
                 for (int x = 0; x < ListaDiGruppi[k].Count; x++)
@@ -382,7 +367,7 @@ namespace BungaBunga
                 return false;
             }
 
-            //check costituzione
+            //check costituzione //
 
             if (costituzione < 0.0 || costituzione > 1.0)
             {
@@ -408,6 +393,8 @@ namespace BungaBunga
                 }
             }
 
+            if (check == 8)
+            {
                 return true;
             
         }
