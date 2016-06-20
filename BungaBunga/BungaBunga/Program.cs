@@ -13,19 +13,8 @@ namespace BungaBunga
         private static List<Persona> ListaNera = new List<Persona>();
         private static List<List<Persona>> ListaDiGruppi = new List<List<Persona>>();
 
-        private static string nome;
-        private static char sesso;
-        private static int denaro;
-        private static int eta;
-        private static int altezza;
-        private static int peso;
-        private static float capelli;
-        private static float costituzione;
-        private static string presenze;
-
         static void Main(string[] args)
         {
-
             string line;
             string evento;
 
@@ -43,16 +32,9 @@ namespace BungaBunga
 
                 if (evento == "in")
                 {
-                    assegna_caratteristiche(strings);
-
-                    if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
-                    {
-                        introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
-                        Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
-                    }
-
+                    verifica_e_introduci(strings);
                 }
-
+             
                 else if (evento == "out")
                 {
                     estrometti(strings[1]);
@@ -97,24 +79,108 @@ namespace BungaBunga
                }
        */
 
-        public static void assegna_caratteristiche(string[] strings)
+        private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
+            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
+            string[] sessi = { "M", "F" };
+            string giornisettimana = "LMEGVSD";
 
-            nome = strings[1];
-            sesso = Convert.ToChar(strings[2]);
-            denaro = Convert.ToInt32(strings[3]);
-            eta = Convert.ToInt32(strings[4]);
-            altezza = Convert.ToInt32(strings[5]);
-            peso = Convert.ToInt32(strings[6]);
-            capelli = float.Parse(strings[7], CultureInfo.InvariantCulture.NumberFormat);
-            costituzione = float.Parse(strings[8], CultureInfo.InvariantCulture.NumberFormat);
-            presenze = strings[9];
+            // check nome
+
+            for (int i = 0; i < simbolinonpermessi.Length; i++)
+            {
+                if (!(nome.IndexOf(simbolinonpermessi[i]) == -1))
+                {
+                    Console.WriteLine("Il campo \"nome\" contiene il simbolo non permesso {0}", simbolinonpermessi[i]);
+                    return false;
+                }
+            }
+
+            // check sesso
+
+            if (!(sesso == 'M' || sesso == 'F'))
+            {
+                Console.WriteLine("Il campo \"sesso\" inserito è errato");
+                return false;
+            }
+
+            // check età
+
+            if (età < 17 || età > 24)
+            {
+                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni)", età);
+                return false;
+            }
+
+            // check altezza
+
+            if (altezza < 100 || altezza > 220)
+            {
+                Console.WriteLine("Il campo \"altezza\" inserito {0} non è in cm", altezza);
+                return false;
+            }
+
+
+            // check peso
+
+            if (peso < 10 || peso > 500)
+            {
+                Console.WriteLine("Il campo \"peso\" inserito {0} non è in kg", peso);
+                return false;
+            }
+
+            // check colore capelli
+
+            if (colorecapelli < 0.0 || colorecapelli > 1.0)
+            {
+                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
+                return false;
+            }
+
+            //check costituzione
+
+            if (costituzione < 0.0 || costituzione > 1.0)
+            {
+                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 - 1.0)", costituzione);
+                return false;
+            }
+
+            //check giorni settimana
+
+            for (int i = 0; i < presenze.Length; i++)
+            {
+                if (!giornisettimana.Contains(presenze[i]))
+                {
+                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", presenze[i]);
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
+
+        public static void verifica_e_introduci(string[] strings)
+        {
+            string nome = strings[1];
+            char sesso = Convert.ToChar(strings[2]);
+            int denaro = Convert.ToInt32(strings[3]);
+            int eta = Convert.ToInt32(strings[4]);
+            int altezza = Convert.ToInt32(strings[5]);
+            int peso = Convert.ToInt32(strings[6]);
+            float capelli = float.Parse(strings[7], CultureInfo.InvariantCulture.NumberFormat);
+            float costituzione = float.Parse(strings[8], CultureInfo.InvariantCulture.NumberFormat);
+            string presenze = strings[9];
+
+            if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
+            {
+                introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
+            }
         }
 
         public static void introduci(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
-            //da aggiungere: eventuale controllo sui dati in ingresso (prima che incongruenze finiscano nella lista)
-
             if (sesso == 'M')
             {
                 Politico P = new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
@@ -127,7 +193,6 @@ namespace BungaBunga
                 if (!(ListaNera.Contains(E) || ListaEscort.Contains(E))) ListaEscort.Add(E);
             }
         }
-
 
         public static void estrometti(string nome)
         {
@@ -152,12 +217,10 @@ namespace BungaBunga
 
         }
 
-
-
         public static int bungabunga(char giorno, int Naccoppiamenti)
         {
 
-            //creiamo, sulla base del giorno in unput, le sottoliste di Politici ed Escort che possono partecipare
+            //creiamo, sulla base del giorno in input, le sottoliste di Politici ed Escort che possono partecipare
 
             List<Politico> SottoListaPolitici = new List<Politico>();
             for (int i = 0; i < ListaPolitici.Count; i++)
@@ -212,14 +275,12 @@ namespace BungaBunga
             }
             //chiamiamo la funzione "GeneraOrgie" per calcolare il numero di gruppetti che si vengono a formare
 
-            List<List<Persona>> ListaDiGruppi = GeneraOrgie(ListaCoppie, 0);
+            List<List<Persona>> ListaDiGruppi = GeneraOrge(ListaCoppie, 0);
 
             //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
             TrovaOrgione(ListaDiGruppi);
             return Naccoppiamenti;
         }
-
-
 
         private static float CalcolaAffinità(Politico P, Escort E)  //restituisce il valore di discrepanza tra le preferenze del politico e le caratteristiche della Escort
         {
@@ -229,22 +290,7 @@ namespace BungaBunga
             return Discrepanza;
         }
 
-
-
-        private Tuple<string, string> LeggiIstruzione(int n)  //legge l'istruzione alla riga n-esima nel file di input e la restituisce interpretata nella forma di Tupla <(IDevento), (parametri)>
-        {
-            string istruzione = null;
-            string parametri = null;
-            //gestione lettura da file
-
-            //interpretazione della riga letta (istruzione=.... ; parametri = ..... ; NB: i parametri saranno nello stesso ordine del testo, e separati da " ")
-
-            Tuple<string, string> tupla = new Tuple<string, string>(istruzione, parametri);
-            return tupla;
-        }
-
-
-        private static List<List<Persona>> GeneraOrgie(List<Tuple<Politico, Escort>> ListaCoppie, int j)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
+        private static List<List<Persona>> GeneraOrge(List<Tuple<Politico, Escort>> ListaCoppie, int j)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
         {
             List<Persona> Gruppo = new List<Persona>();
             Gruppo.Add(ListaCoppie[0].Item1);
@@ -279,6 +325,7 @@ namespace BungaBunga
                     }
                 }
             }
+
             /////////////STAMPA GRUPPI PER DEBUG ////////////////////////
             for (int k = 0; k < ListaDiGruppi.Count; k++)
             {
@@ -290,17 +337,17 @@ namespace BungaBunga
             }
             Console.WriteLine("----------------------------------------");
             /////////////FINE STAMPA GRUPPI PER DEBUG////////////////////
+
             if (ListaCoppie.Count == 0) //se la coppia non può partecipare ad una stanza già esistente, creo una nuova stanza con i due elementi della coppia
             {
                 return ListaDiGruppi;
             }
             else
             {
-                return GeneraOrgie(ListaCoppie, j + 1);
+                return GeneraOrge(ListaCoppie, j + 1); //genero la nuova stanza
             }
 
         }
-
 
         private static void TrovaOrgione(List<List<Persona>> ListaDiGruppi)
         {
@@ -322,85 +369,5 @@ namespace BungaBunga
             Console.WriteLine("{0} {1} {2}", ListaDiGruppi.Count, NPolitici, NEscort);
         }
 
-        private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
-        {
-            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
-            string[] sessi = { "M", "F" };
-            string giornisettimana = "LMEGVSD";
-
-            // check nome
-
-            for (int i = 0; i < simbolinonpermessi.Length; i++)
-            {
-                if (!(nome.IndexOf(simbolinonpermessi[i]) == -1))
-                {
-                    Console.WriteLine("Il campo \"nome\" contiene il simbolo non permesso {0}", simbolinonpermessi[i]);
-                    return false;
-                }
-            }
-
-            // check sesso
-
-            if (!(sesso == 'M' || sesso == 'F'))
-            {
-                Console.WriteLine("Il campo \"sesso\" inserito è errato");
-                return false;
-            }
-
-            // check età
-
-            if (età<17 || età>24)
-            {
-                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni)", età);
-                return false;
-            }
-
-            // check altezza
-
-            if (altezza < 100 || altezza > 220)
-            {
-                Console.WriteLine("Il campo \"altezza\" inserito {0} non è in cm", altezza);
-                return false;
-            }
-
-
-            // check peso
-
-            if (peso < 10 || peso > 500)
-            {
-                Console.WriteLine("Il campo \"peso\" inserito {0} non è in kg", peso);
-                return false;
-            }
-
-            // check colore capelli
-
-            if (colorecapelli < 0.0 || colorecapelli > 1.0)
-            {
-                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
-                return false;
-            }
-
-            //check costituzione
-
-            if (costituzione < 0.0 || costituzione > 1.0)
-            {
-                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 - 1.0)", costituzione);
-                return false;
-            }
-
-            //check giorni settimana
-
-            for (int i = 0; i < presenze.Length; i++)
-            {
-                if (!giornisettimana.Contains(presenze[i]))
-                {
-                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", presenze[i]);
-                    return false;
-                }
-            }
-
-            return true;
-            
-        }
     }
 }

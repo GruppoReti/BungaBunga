@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BungaBunga
+namespace BungaBunga.BL
 {
     public class Persona
     {
@@ -65,7 +65,7 @@ namespace BungaBunga
         /*
                 public string Nome
                 {
-                   get;
+                   get { return Nome; }
                    set { Nome = value; }
                 }
                 */
