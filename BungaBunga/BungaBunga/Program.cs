@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace BungaBunga
 {
@@ -30,7 +29,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\castese1\Desktop\provaBunga.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBungaFuoriRange.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -45,14 +44,13 @@ namespace BungaBunga
                 if (evento == "in")
                 {
                     assegna_caratteristiche(strings);
-                    Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
 
                     if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
                     {
                         introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                        Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
                     }
 
-                    // else Console.WriteLine("Dati della persona non conformi agli standard");
                 }
 
                 else if (evento == "out")
@@ -108,8 +106,8 @@ namespace BungaBunga
             eta = Convert.ToInt32(strings[4]);
             altezza = Convert.ToInt32(strings[5]);
             peso = Convert.ToInt32(strings[6]);
-            capelli = (float)Convert.ToDouble(strings[7]);
-            costituzione = (float)Convert.ToDouble(strings[8]);
+            capelli = float.Parse(strings[7], CultureInfo.InvariantCulture.NumberFormat);
+            costituzione = float.Parse(strings[8], CultureInfo.InvariantCulture.NumberFormat);
             presenze = strings[9];
         }
 
@@ -362,37 +360,17 @@ namespace BungaBunga
                 return false;
             }
 
-            // check denaro
-            /*   if (denaro- Math.Truncate(denaro))
-                 {
-                     check = check + 1;
-                 }
-                 else
-                 {
-                     Console.WriteLine("Il campo \"denaro\" non è un intero");
-                     return false;
-                 }*/
-
             // check età
 
-            counter = 0;
-            for (int i = 0; i < range_età.Length; i++)
-            {
-                if (età == range_età[i])
-                {
-                    check = check + 1;
-                    counter = counter + 1;
-                }
-            }
-            if (counter == range_età.Length)
+            if (età<17 || età>24)
             {
                 Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni)", età);
                 return false;
             }
-
+            check += 1;
             // check altezza
 
-            if (altezza > 130 && altezza < 220)
+            if (altezza > 100 && altezza < 220)
             {
                 check = check + 1;
             }
@@ -417,7 +395,7 @@ namespace BungaBunga
 
             // check colore capelli
 
-            if (colorecapelli < 0.0 && colorecapelli > 1.0)
+            if (colorecapelli < 0.0 || colorecapelli > 1.0)
             {
                 Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
                 return false;
@@ -429,7 +407,7 @@ namespace BungaBunga
 
             //check costituzione
 
-            if (costituzione < 0.0 && costituzione > 1.0)
+            if (costituzione < 0.0 || costituzione > 1.0)
             {
                 Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 -1.0)", costituzione);
                 return false;
