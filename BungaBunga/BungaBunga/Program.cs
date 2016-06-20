@@ -87,7 +87,6 @@ namespace BungaBunga
                    ListaPolitici.Add(P);
                    ListaPolitici.Add(P2);
                    ListaPolitici.Add(P3);
-
                    ListaEscort.Add(E);
                    ListaEscort.Add(E2);
                    ListaEscort.Add(E3);
@@ -229,19 +228,6 @@ namespace BungaBunga
             return Discrepanza;
         }
 
-
-
-        private Tuple<string, string> LeggiIstruzione(int n)  //legge l'istruzione alla riga n-esima nel file di input e la restituisce interpretata nella forma di Tupla <(IDevento), (parametri)>
-        {
-            string istruzione = null;
-            string parametri = null;
-            //gestione lettura da file
-
-            //interpretazione della riga letta (istruzione=.... ; parametri = ..... ; NB: i parametri saranno nello stesso ordine del testo, e separati da " ")
-
-            Tuple<string, string> tupla = new Tuple<string, string>(istruzione, parametri);
-            return tupla;
-        }
 
 
         private static List<List<Persona>> GeneraOrgie(List<Tuple<Politico, Escort>> ListaCoppie, int j)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
