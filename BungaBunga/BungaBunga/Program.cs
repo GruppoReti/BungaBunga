@@ -271,7 +271,7 @@ namespace BungaBunga
                     }
                 }
             }
-            /////////////STAMPA GRUPPI PER DEBUG ////////////////////////
+            /////////////   STAMPA GRUPPI PER DEBUG ////////////////////////
             for (int k = 0; k < ListaDiGruppi.Count; k++)
             {
                 for (int x = 0; x < ListaDiGruppi[k].Count; x++)
