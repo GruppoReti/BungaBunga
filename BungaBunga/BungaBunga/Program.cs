@@ -30,7 +30,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\milinlo1\Desktop\provaBunga.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBunga.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -63,8 +63,8 @@ namespace BungaBunga
 
                 else if (evento == "bungabunga")
                 {
-                    bungabunga(Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
-                    Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avverranno {1} donazioni", Convert.ToChar(strings[2]), Convert.ToInt32(strings[3]));
+                    int NaccopiamentiAvvenuti = bungabunga(Convert.ToChar(strings[1]), Convert.ToInt32(strings[2]));
+                    Console.WriteLine("Gran festa a casa del presidente il giorno {0}, avvenute {1} donazioni", Convert.ToChar(strings[1]), NaccopiamentiAvvenuti);
                 }
 
 
@@ -76,8 +76,8 @@ namespace BungaBunga
 
         }
 
-   /*     MAIN DI TEST SEBA
-        static void Main(string[] args)
+   //    MAIN DI TEST SEBA
+ /*       static void Main(string[] args)
         {   
             //test GeneraOrgie
             Politico P = new Politico("Berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
@@ -94,12 +94,12 @@ namespace BungaBunga
             ListaEscort.Add(E);
             ListaEscort.Add(E2);
             ListaEscort.Add(E3);
-            bungabunga('E', 3);
+            bungabunga('E', 5);
             //fine test GeneraOrgie
             Console.ReadKey();
         }
-
 */
+
         public static void assegna_caratteristiche(string[] strings)
         {
 
@@ -157,12 +157,8 @@ namespace BungaBunga
 
 
 
-        public static void bungabunga(char giorno, int Naccoppiamenti)  
+        public static int bungabunga(char giorno, int Naccoppiamenti)  
         {
-
-            //verifica dati inseriti
-
-            //(TO BE DONE)
 
             //creiamo, sulla base del giorno in unput, le sottoliste di Politici ed Escort che possono partecipare
 
@@ -182,6 +178,19 @@ namespace BungaBunga
                     SottoListaEscort.Add(ListaEscort[i]);
                 }
             }
+
+
+            //verifica dati inseriti
+
+            if (SottoListaPolitici.Count * SottoListaEscort.Count < Naccoppiamenti)
+            {
+                Naccoppiamenti = SottoListaPolitici.Count * SottoListaEscort.Count;
+                if (Naccoppiamenti == 0)
+                {
+                    return Naccoppiamenti;
+                }
+            }
+
             //per ogni possibile coppia Politico-Escort calcoliamo la discrepanza secondo le indicazioni del testo, e generiamo una Tupla <Politico, Escort, float> da inserire nella lista
 
             List<Tuple<Politico, Escort, float>> ListaDiAffinità = new List<Tuple<Politico, Escort, float>>();
@@ -205,11 +214,12 @@ namespace BungaBunga
                 ListaCoppie.Add(Tuple.Create(ListaDiAffinitàOrdinata[i].Item1,ListaDiAffinitàOrdinata[i].Item2));
             }
             //chiamiamo la funzione "GeneraOrgie" per calcolare il numero di gruppetti che si vengono a formare
-
+            
             List<List<Persona>> ListaDiGruppi = GeneraOrgie(ListaCoppie,0);
 
             //chiamiamo la funzione "TrovaOrgione" per identificare la stanza con più elementi -> ci restituisce una lista/array di 3 interi che rappresentano l'output richiesto
             TrovaOrgione(ListaDiGruppi);
+            return Naccoppiamenti;
         }
 
 
@@ -290,7 +300,7 @@ namespace BungaBunga
                 {
                     return GeneraOrgie(ListaCoppie, j+1);
                 }
-
+            
         }
 
 
@@ -450,7 +460,7 @@ namespace BungaBunga
 
             // check finale
 
-            if (check == 9)
+            if (check == 8)
             {
                 return true;
             }
