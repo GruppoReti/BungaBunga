@@ -30,7 +30,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\castese1\Desktop\provaBunga.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBungaFuoriRange.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -45,11 +45,11 @@ namespace BungaBunga
                 if (evento == "in")
                 {
                     assegna_caratteristiche(strings);
-                    Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
 
                     if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
                     {
                         introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
+                        Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
                     }
 
                    // else Console.WriteLine("Dati della persona non conformi agli standard");
@@ -232,21 +232,6 @@ namespace BungaBunga
             return Discrepanza;
         }
 
-
-
-        private Tuple<string,string> LeggiIstruzione(int n)  //legge l'istruzione alla riga n-esima nel file di input e la restituisce interpretata nella forma di Tupla <(IDevento), (parametri)>
-        {
-            string istruzione = null;
-            string parametri = null;
-            //gestione lettura da file
-
-            //interpretazione della riga letta (istruzione=.... ; parametri = ..... ; NB: i parametri saranno nello stesso ordine del testo, e separati da " ")
-
-            Tuple<string, string> tupla = new Tuple<string, string>(istruzione, parametri);
-            return tupla;
-        }
-
-
         private static List<List<Persona>> GeneraOrgie(List<Tuple<Politico, Escort>> ListaCoppie, int j)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
         {
             List<Persona> Gruppo = new List<Persona>();
@@ -326,7 +311,6 @@ namespace BungaBunga
 
         private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
-            int check = 0;
             string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
             string[] sessi = { "M", "F" };
             //string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
@@ -348,30 +332,14 @@ namespace BungaBunga
                     return false;
                 }
             }
-            check = check + 1;
 
             // check sesso
 
-            if (sesso == 'M' || sesso == 'F')
-            {
-                check = check + 1;
-            }
-            else
+            if (!(sesso == 'M' || sesso == 'F'))
             {
                 Console.WriteLine("Il campo \"sesso\" inserito è errato");
                 return false;
             }
-
-            // check denaro
-            /*   if (denaro- Math.Truncate(denaro))
-                 {
-                     check = check + 1;
-                 }
-                 else
-                 {
-                     Console.WriteLine("Il campo \"denaro\" non è un intero");
-                     return false;
-                 }*/
 
             // check età
 
@@ -380,7 +348,6 @@ namespace BungaBunga
             {
                 if (età == range_età[i])
                 {
-                    check = check + 1;
                     counter = counter + 1;
                 }
             }
@@ -392,11 +359,7 @@ namespace BungaBunga
 
             // check altezza
 
-            if (altezza > 130 && altezza < 220)
-            {
-                check = check + 1;
-            }
-            else
+            if (!(altezza > 130 && altezza < 220))
             {
                 Console.WriteLine("Il campo \"altezza\" inserito {0} non è in cm", altezza);
                 return false;
@@ -405,11 +368,7 @@ namespace BungaBunga
 
             // check peso
 
-            if (peso > 10 && peso < 500)
-            {
-                check = check + 1;
-            }
-            else
+            if (peso < 10 || peso > 500)
             {
                 Console.WriteLine("Il campo \"peso\" inserito {0} non è in kg", peso);
                 return false;
@@ -417,27 +376,20 @@ namespace BungaBunga
 
             // check colore capelli
 
-            if (colorecapelli < 0.0 && colorecapelli > 1.0)
+            if (colorecapelli < 0.0 || colorecapelli > 1.0)
             {
                 Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
                 return false;
             }
-            else
-            {
-                check = check + 1;
-            }
 
             //check costituzione
 
-            if (costituzione < 0.0 && costituzione > 1.0)
+            if (costituzione < 0.0 || costituzione > 1.0)
             {
-                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 -1.0)", costituzione);
+                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 - 1.0)", costituzione);
                 return false;
             }
-            else
-            {
-                check = check + 1;
-            }
+
 
             //check giorni settimana
 
@@ -455,19 +407,9 @@ namespace BungaBunga
                     //counter = counter + 1;
                 }
             }
-            check = check + 1;
 
-
-            // check finale
-
-            if (check == 8)
-            {
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            
         }
     }
 }
