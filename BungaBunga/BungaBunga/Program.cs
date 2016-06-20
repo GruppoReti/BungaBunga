@@ -18,7 +18,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\castese1\Desktop\provaBungaFuoriRange.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBungaReinserimentoDiPersona.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -174,24 +174,39 @@ namespace BungaBunga
 
             if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
             {
-                introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze);
-                Console.WriteLine("La persona {0} è stata introdotta alla festa", nome);
+                if(introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
+                {
+                Console.WriteLine("{0} è stato introdotto nell'elenco!", nome);
+                }
+                else
+                {
+                 Console.WriteLine("{0} è in lista nera!", nome);
+                }
             }
         }
 
-        public static void introduci(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
-        {
+        public static bool introduci(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
+        {   
             if (sesso == 'M')
             {
                 Politico P = new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                if (!(ListaNera.Contains(P) || ListaPolitici.Contains(P))) ListaPolitici.Add(P);
+                if (!(ListaNera.Contains(P) || ListaPolitici.Contains(P)))
+                {
+                    ListaPolitici.Add(P);
+                    return true;
+                }
                 //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
             }
             else
             {
                 Escort E = new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                if (!(ListaNera.Contains(E) || ListaEscort.Contains(E))) ListaEscort.Add(E);
+                if (!(ListaNera.Contains(E) || ListaEscort.Contains(E)))
+                {
+                    ListaEscort.Add(E);
+                    return true;
+                }
             }
+            return false; //BUG: non viene mai eseguito il return FALSE! (lista nera)
         }
 
         public static void estrometti(string nome)
