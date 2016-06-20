@@ -87,6 +87,7 @@ namespace BungaBunga
                    ListaPolitici.Add(P);
                    ListaPolitici.Add(P2);
                    ListaPolitici.Add(P3);
+
                    ListaEscort.Add(E);
                    ListaEscort.Add(E2);
                    ListaEscort.Add(E3);
@@ -230,6 +231,19 @@ namespace BungaBunga
 
 
 
+        private Tuple<string, string> LeggiIstruzione(int n)  //legge l'istruzione alla riga n-esima nel file di input e la restituisce interpretata nella forma di Tupla <(IDevento), (parametri)>
+        {
+            string istruzione = null;
+            string parametri = null;
+            //gestione lettura da file
+
+            //interpretazione della riga letta (istruzione=.... ; parametri = ..... ; NB: i parametri saranno nello stesso ordine del testo, e separati da " ")
+
+            Tuple<string, string> tupla = new Tuple<string, string>(istruzione, parametri);
+            return tupla;
+        }
+
+
         private static List<List<Persona>> GeneraOrgie(List<Tuple<Politico, Escort>> ListaCoppie, int j)  //funzione che prende in ingresso la lista di coppie che parteciperanno al BungaBunga e restituisce una lista di gruppi [quindi una lista di "liste di persone"(i.e. "gruppi")] che rappresentano le stanze di Villa San Martino
         {
             List<Persona> Gruppo = new List<Persona>();
@@ -310,37 +324,24 @@ namespace BungaBunga
 
         private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
-            int check = 0;
             string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
             string[] sessi = { "M", "F" };
-            //string[] giornisettimana = { "L", "M", "E", "G", "V", "S", "D" };
             string giornisettimana = "LMEGVSD";
-            int[] range_età = { 17, 18, 19, 20, 21, 22, 23, 24 };
-            int counter = 0;
 
             // check nome
 
             for (int i = 0; i < simbolinonpermessi.Length; i++)
             {
-                if (nome.IndexOf(simbolinonpermessi[i]) == -1)
-                {
-                    //
-                }
-                else
+                if (!(nome.IndexOf(simbolinonpermessi[i]) == -1))
                 {
                     Console.WriteLine("Il campo \"nome\" contiene il simbolo non permesso {0}", simbolinonpermessi[i]);
                     return false;
                 }
             }
-            check = check + 1;
 
             // check sesso
 
-            if (sesso == 'M' || sesso == 'F')
-            {
-                check = check + 1;
-            }
-            else
+            if (!(sesso == 'M' || sesso == 'F'))
             {
                 Console.WriteLine("Il campo \"sesso\" inserito è errato");
                 return false;
@@ -353,14 +354,10 @@ namespace BungaBunga
                 Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni)", età);
                 return false;
             }
-            check += 1;
+
             // check altezza
 
-            if (altezza > 100 && altezza < 220)
-            {
-                check = check + 1;
-            }
-            else
+            if (altezza < 100 || altezza > 220)
             {
                 Console.WriteLine("Il campo \"altezza\" inserito {0} non è in cm", altezza);
                 return false;
@@ -369,11 +366,7 @@ namespace BungaBunga
 
             // check peso
 
-            if (peso > 10 && peso < 500)
-            {
-                check = check + 1;
-            }
-            else
+            if (peso < 10 || peso > 500)
             {
                 Console.WriteLine("Il campo \"peso\" inserito {0} non è in kg", peso);
                 return false;
@@ -386,52 +379,28 @@ namespace BungaBunga
                 Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
                 return false;
             }
-            else
-            {
-                check = check + 1;
-            }
 
             //check costituzione
 
             if (costituzione < 0.0 || costituzione > 1.0)
             {
-                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 -1.0)", costituzione);
+                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 - 1.0)", costituzione);
                 return false;
-            }
-            else
-            {
-                check = check + 1;
             }
 
             //check giorni settimana
 
-            counter = 0;
             for (int i = 0; i < presenze.Length; i++)
             {
-                // if (presenze.IndexOf(giornisettimana[i]) == -1)
                 if (!giornisettimana.Contains(presenze[i]))
                 {
                     Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", presenze[i]);
                     return false;
                 }
-                else
-                {
-                    //counter = counter + 1;
-                }
             }
-            check = check + 1;
 
-
-            // check finale
-
-            if (check == 8)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
+            
         }
     }
 }
