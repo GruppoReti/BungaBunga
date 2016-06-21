@@ -1,23 +1,58 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BungaBunga
 {
     public class Persona : IEquatable<Persona>
     {
-        //ATTRIBUTI
-        protected string nome;
-        protected char sesso;
-        protected int denaro;
-        protected int età;
-        protected int altezza;
-        protected int peso;
-        protected float colorecapelli;
-        protected float costituzione;
-        protected string presenze;
+    
+        //PROPRIETA'
+
+        public string nome
+        {
+            get; protected set;
+        }
+
+        public char sesso
+        {
+            get; protected set;
+        }
+
+        public int denaro
+        {
+            get; protected set;
+        }
+
+        public int età
+        {
+            get; protected set;
+        }
+
+        public int altezza
+        {
+            get; protected set;
+        }
+
+        public int peso
+        {
+            get; protected set;
+        }
+
+        public float colorecapelli
+        {
+            get; protected set;
+        }
+
+        public float costituzione
+        {
+            get; protected set;
+        }
+
+        public string presenze
+        {
+            get; protected set;
+        }
+
+        // METODI
 
         public bool Equals(Persona other)
         {
@@ -30,53 +65,6 @@ namespace BungaBunga
                 return false;
         }
 
-
-        //PROPRIETA'
-
-        public string Nome
-        {
-            get { return nome; }
-        }
-
-        public char Sesso
-        {
-            get { return sesso; }
-        }
-
-        public int Denaro
-        {
-            get { return denaro; }
-        }
-
-        public int Età
-        {
-            get { return età; }
-        }
-
-        public int Altezza
-        {
-            get { return altezza; }
-        }
-
-        public int Peso
-        {
-            get { return peso; }
-        }
-
-        public float ColoreCapelli
-        {
-            get { return colorecapelli; }
-        }
-
-        public float Costituzione
-        {
-            get { return costituzione; }
-        }
-
-        public string Presenze
-        {
-            get { return presenze; }
-        }
 
     }
 }

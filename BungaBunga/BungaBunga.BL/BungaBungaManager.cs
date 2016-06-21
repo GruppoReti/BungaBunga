@@ -146,7 +146,7 @@ namespace BungaBunga.BL
         public static void estrometti(string nome)
         {
 
-            var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.Nome == nome); // controlla se il soggetto è già presente nella lista
+            var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.nome == nome); // controlla se il soggetto è già presente nella lista
             if (politico_estromesso != null)
             {
                 ListaPolitici.Remove(politico_estromesso);  // elimina il soggetto dalla lista
@@ -155,7 +155,7 @@ namespace BungaBunga.BL
 
             else
             {
-                var escort_estromessa = ListaEscort.SingleOrDefault(x => x.Nome == nome);
+                var escort_estromessa = ListaEscort.SingleOrDefault(x => x.nome == nome);
                 if (escort_estromessa != null)
                 {
                     ListaEscort.Remove(escort_estromessa);
@@ -174,7 +174,7 @@ namespace BungaBunga.BL
             List<Politico> SottoListaPolitici = new List<Politico>();
             for (int i = 0; i < ListaPolitici.Count; i++)
             {
-                if (ListaPolitici[i].Presenze.Contains(giorno.ToString()))
+                if (ListaPolitici[i].presenze.Contains(giorno.ToString()))
                 {
                     SottoListaPolitici.Add(ListaPolitici[i]);
                 }
@@ -182,7 +182,7 @@ namespace BungaBunga.BL
             List<Escort> SottoListaEscort = new List<Escort>();
             for (int i = 0; i < ListaEscort.Count; i++)
             {
-                if (ListaEscort[i].Presenze.Contains(giorno.ToString()))
+                if (ListaEscort[i].presenze.Contains(giorno.ToString()))
                 {
                     SottoListaEscort.Add(ListaEscort[i]);
                 }
@@ -235,7 +235,7 @@ namespace BungaBunga.BL
         {
             float Discrepanza = 0;
             float[] importanza = { (float)0.0009, (float)1.0, (float)0.1, (float)0.15, (float)0.5, (float)2.0 };
-            Discrepanza = Math.Abs(P.Denaro - E.Denaro) * importanza[0] + Math.Abs(P.Età - E.Età) * importanza[1] + Math.Abs(P.Altezza - E.Altezza) * importanza[2] + Math.Abs(P.Peso - E.Peso) * importanza[3] + Math.Abs(P.ColoreCapelli - E.ColoreCapelli) * importanza[4] + Math.Abs(P.Costituzione - E.Costituzione) * importanza[5];
+            Discrepanza = Math.Abs(P.denaro - E.denaro) * importanza[0] + Math.Abs(P.età - E.età) * importanza[1] + Math.Abs(P.altezza - E.altezza) * importanza[2] + Math.Abs(P.peso - E.peso) * importanza[3] + Math.Abs(P.colorecapelli - E.colorecapelli) * importanza[4] + Math.Abs(P.costituzione - E.costituzione) * importanza[5];
             return Discrepanza;
         }
 
@@ -280,7 +280,7 @@ namespace BungaBunga.BL
             {
                 for (int x = 0; x < ListaDiGruppi[k].Count; x++)
                 {
-                    Console.Write(" {0}", ListaDiGruppi[k][x].Nome;
+                    Console.Write(" {0}", ListaDiGruppi[k][x].nome);
                 }
                 Console.WriteLine();
             }
@@ -310,7 +310,7 @@ namespace BungaBunga.BL
                 {
                     max = ListaDiGruppi[i].Count;
                     indicemax = i;
-                    NPolitici = ListaDiGruppi[i].Count(x => x.Sesso == 'M');
+                    NPolitici = ListaDiGruppi[i].Count(x => x.sesso == 'M');
                     NEscort = max - NPolitici;
                 }
             }
