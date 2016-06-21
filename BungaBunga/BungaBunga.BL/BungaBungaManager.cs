@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace BungaBunga.BL
 {
-    class BungaBungaManager
+    public class BungaBungaManager
     {
         private static List<Politico> ListaPolitici = new List<Politico>();
         private static List<Escort> ListaEscort = new List<Escort>();
