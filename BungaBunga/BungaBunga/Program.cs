@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace BungaBunga
 {
-    class Program 
+    class Program
     {
         private static List<Politico> ListaPolitici = new List<Politico>();
         private static List<Escort> ListaEscort = new List<Escort>();
@@ -81,7 +81,7 @@ namespace BungaBunga
 
         private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
-            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
+            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
             string[] sessi = { "M", "F" };
             string giornisettimana = "LMEGVSD";
 
@@ -193,7 +193,6 @@ namespace BungaBunga
                 if (!(ListaNera.Contains(P) || ListaPolitici.Contains(P)))
                 {
                     ListaPolitici.Add(P);
-                    Console.WriteLine("return true Politico");
                     return true;
                 }
                 //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
@@ -204,11 +203,9 @@ namespace BungaBunga
                 if (!(ListaNera.Contains(E) || ListaEscort.Contains(E)))
                 {
                     ListaEscort.Add(E);
-                    Console.WriteLine("return true Escort");
                     return true;
                 }
             }
-            Console.WriteLine("return false");
             return false; //BUG: non viene mai eseguito il return FALSE! (lista nera)
         }
 
