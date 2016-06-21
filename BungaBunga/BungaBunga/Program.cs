@@ -18,7 +18,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\castese1\Desktop\provaBungaReinserimentoDiPersona.txt";
+            string path = @"C:\Users\milinlo1\Desktop\provaBungaFuoriRange.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -81,7 +81,7 @@ namespace BungaBunga
 
         private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
-            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "'", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
+            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
             string[] sessi = { "M", "F" };
             string giornisettimana = "LMEGVSD";
 
@@ -170,6 +170,7 @@ namespace BungaBunga
             int peso = Convert.ToInt32(strings[6]);
             float capelli = float.Parse(strings[7], CultureInfo.InvariantCulture.NumberFormat);
             float costituzione = float.Parse(strings[8], CultureInfo.InvariantCulture.NumberFormat);
+            Console.WriteLine(costituzione);
             string presenze = strings[9];
 
             if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
