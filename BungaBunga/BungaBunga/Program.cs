@@ -7,10 +7,6 @@ namespace BungaBunga
 {
     class Program
     {
-        private static List<Politico> ListaPolitici = new List<Politico>();
-        private static List<Escort> ListaEscort = new List<Escort>();
-        private static List<Persona> ListaNera = new List<Persona>();
-        private static List<List<Persona>> ListaDiGruppi = new List<List<Persona>>();
 
         static void Main(string[] args)
         {
