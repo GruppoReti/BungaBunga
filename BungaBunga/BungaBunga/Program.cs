@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using BungaBunga.BL;
 
@@ -13,7 +12,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\rebolan1\Desktop\provaBungaReinserimentoDiPersona.txt";
+            string path = @"C:\Users\milinlo1\Desktop\provaBunga.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
