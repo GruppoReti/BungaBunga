@@ -18,7 +18,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\castese1\Desktop\provaBungaReinserimentoDiPersona.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBungaFuoriRange.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -133,7 +133,7 @@ namespace BungaBunga
 
             if (colorecapelli < 0.0 || colorecapelli > 1.0)
             {
-                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
+                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.0 - 1.0)", colorecapelli);
                 return false;
             }
 
@@ -141,7 +141,7 @@ namespace BungaBunga
 
             if (costituzione < 0.0 || costituzione > 1.0)
             {
-                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 - 1.0)", costituzione);
+                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.0 - 1.0)", costituzione);
                 return false;
             }
 
