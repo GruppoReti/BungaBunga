@@ -24,7 +24,7 @@ namespace BungaBunga
 
                 string[] strings = line.Split(' ');
                 evento = strings[0];
-
+                 
                 if (evento == "in")
                 {
                     BungaBungaManager.verifica_e_introduci(strings);
