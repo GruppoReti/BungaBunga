@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BungaBunga
 {
-    public class Persona
+    public class Persona : IEquatable<Persona>
     {
 //ATTRIBUTI
         protected string nome;
@@ -18,6 +18,17 @@ namespace BungaBunga
         protected float colorecapelli;
         protected float costituzione;
         protected string presenze;
+
+        public bool Equals(Persona other)
+        {
+            if (other == null)
+                return false;
+
+            if (nome == other.nome && sesso==other.sesso && denaro==other.denaro && età==other.età && altezza==other.altezza && peso==other.peso && colorecapelli==other.colorecapelli && costituzione==other.costituzione && presenze==other.presenze)
+                return true;
+            else
+                return false;
+        }
 
         public string GetNome()
         {

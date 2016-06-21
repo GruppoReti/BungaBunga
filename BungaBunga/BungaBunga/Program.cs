@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace BungaBunga
 {
-    class Program
+    class Program 
     {
         private static List<Politico> ListaPolitici = new List<Politico>();
         private static List<Escort> ListaEscort = new List<Escort>();
@@ -18,7 +18,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\castese1\Desktop\provaBungaFuoriRange.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBungaReinserimentoDiPersona.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
@@ -193,6 +193,7 @@ namespace BungaBunga
                 if (!(ListaNera.Contains(P) || ListaPolitici.Contains(P)))
                 {
                     ListaPolitici.Add(P);
+                    Console.WriteLine("return true Politico");
                     return true;
                 }
                 //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
@@ -203,9 +204,11 @@ namespace BungaBunga
                 if (!(ListaNera.Contains(E) || ListaEscort.Contains(E)))
                 {
                     ListaEscort.Add(E);
+                    Console.WriteLine("return true Escort");
                     return true;
                 }
             }
+            Console.WriteLine("return false");
             return false; //BUG: non viene mai eseguito il return FALSE! (lista nera)
         }
 
