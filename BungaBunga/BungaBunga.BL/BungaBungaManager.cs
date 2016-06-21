@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Globalization;
-using BungaBunga.BL;
 
-namespace BungaBunga
+namespace BungaBunga.BL
 {
-    class Program
+    class BungaBungaManager
     {
         private static List<Politico> ListaPolitici = new List<Politico>();
         private static List<Escort> ListaEscort = new List<Escort>();
@@ -56,29 +55,6 @@ namespace BungaBunga
             Console.ReadKey();
 
         }
-
-        //    MAIN DI TEST SEBA
-        /*       static void Main(string[] args)
-               {   
-                   //test GeneraOrgie
-                   Politico P = new Politico("Berlusconi",'M',10000, 17, 170, 60,(float)0.5,(float)0.5, "E");
-                   Escort E = new Escort("Ruby", 'F', 10000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-                   Politico P2 = new Politico("Bossi", 'M', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-                   Escort E2 = new Escort("Cicciolina", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-                   Politico P3 = new Politico("Brunetta", 'M', 20000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-                   Escort E3 = new Escort("Belen", 'F', 9000, 17, 170, 60, (float)0.5, (float)0.5, "E");
-                   ListaPolitici.Add(P);
-                   ListaPolitici.Add(P2);
-                   ListaPolitici.Add(P3);
-
-                   ListaEscort.Add(E);
-                   ListaEscort.Add(E2);
-                   ListaEscort.Add(E3);
-                   bungabunga('E', 5);
-                   //fine test GeneraOrgie
-                   Console.ReadKey();
-               }
-       */
 
         private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
