@@ -133,7 +133,7 @@ namespace BungaBunga
 
             if (colorecapelli < 0.0 || colorecapelli > 1.0)
             {
-                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.1 - 1.0)", colorecapelli);
+                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.0 - 1.0)", colorecapelli);
                 return false;
             }
 
@@ -141,7 +141,7 @@ namespace BungaBunga
 
             if (costituzione < 0.0 || costituzione > 1.0)
             {
-                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.1 - 1.0)", costituzione);
+                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.0 - 1.0)", costituzione);
                 return false;
             }
 
@@ -170,7 +170,6 @@ namespace BungaBunga
             int peso = Convert.ToInt32(strings[6]);
             float capelli = float.Parse(strings[7], CultureInfo.InvariantCulture.NumberFormat);
             float costituzione = float.Parse(strings[8], CultureInfo.InvariantCulture.NumberFormat);
-            Console.WriteLine(costituzione);
             string presenze = strings[9];
 
             if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
