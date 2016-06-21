@@ -12,7 +12,7 @@ namespace BungaBunga.BL
         private static List<Escort> ListaEscort = new List<Escort>();
         private static List<Persona> ListaNera = new List<Persona>();
         private static List<List<Persona>> ListaDiGruppi = new List<List<Persona>>();
-        
+
         private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
         {
             string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
