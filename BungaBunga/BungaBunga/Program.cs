@@ -26,12 +26,12 @@ namespace BungaBunga
                  
                 if (evento == "in")
                 {
-                    BungaBungaManager.verifica_e_introduci(strings);
+                    Buttafuori.verifica_e_introduci(strings);
                 }
              
                 else if (evento == "out")
                 {
-                    BungaBungaManager.estrometti(strings[1]);
+                    Buttafuori.estrometti(strings[1]);
                     Console.WriteLine("Estromissione della persona: {0}", strings[1]);
                 }
 
