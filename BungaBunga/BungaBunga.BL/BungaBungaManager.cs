@@ -1,170 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using System.Globalization;
 
 namespace BungaBunga.BL
 {
     public class BungaBungaManager
     {
-        private static List<Politico> ListaPolitici = new List<Politico>();
-        private static List<Escort> ListaEscort = new List<Escort>();
-        private static List<Persona> ListaNera = new List<Persona>();
-        private static List<List<Persona>> ListaDiGruppi = new List<List<Persona>>();
 
-        private static bool VerificaPersona(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
+        // DICHIARAZIONE LISTE
+
+        public static List<Politico> ListaPolitici { get; protected set; } = new List<Politico>();
+        public static List<Escort> ListaEscort { get; protected set; } = new List<Escort>();
+        public static List<Persona> ListaNera { get; protected set; } = new List<Persona>();
+        public static List<List<Persona>> ListaDiGruppi { get; protected set; } = new List<List<Persona>>();
+
+        // PROPRIETA'
+        /*
+        public List<Politico> ListaPolitici2
         {
-            string[] simbolinonpermessi = { ",", ";", "-", "_", "!", "?", "£", "$", "%", "&", "/", "(", ")", "=", "^", "[", "]", "{", "}", "#", "§", "@", ".", ":" };
-            string[] sessi = { "M", "F" };
-            string giornisettimana = "LMEGVSD";
-
-            // check nome
-
-            for (int i = 0; i < simbolinonpermessi.Length; i++)
-            {
-                if (!(nome.IndexOf(simbolinonpermessi[i]) == -1))
-                {
-                    Console.WriteLine("Il campo \"nome\" contiene il simbolo non permesso {0}", simbolinonpermessi[i]);
-                    return false;
-                }
-            }
-
-            // check sesso
-
-            if (!(sesso == 'M' || sesso == 'F'))
-            {
-                Console.WriteLine("Il campo \"sesso\" inserito è errato");
-                return false;
-            }
-
-            // check età
-
-            if (età < 17 || età > 24)
-            {
-                Console.WriteLine("Il campo \"età\" inserito {0} non rispetta i limiti imposti (17 - 24 anni)", età);
-                return false;
-            }
-
-            // check altezza
-
-            if (altezza < 100 || altezza > 220)
-            {
-                Console.WriteLine("Il campo \"altezza\" inserito {0} non è in cm", altezza);
-                return false;
-            }
-
-
-            // check peso
-
-            if (peso < 10 || peso > 500)
-            {
-                Console.WriteLine("Il campo \"peso\" inserito {0} non è in kg", peso);
-                return false;
-            }
-
-            // check colore capelli
-
-            if (colorecapelli < 0.0 || colorecapelli > 1.0)
-            {
-                Console.WriteLine("Il campo \"colorecapelli\" {0} non rispetta i limiti imposti (0.0 - 1.0)", colorecapelli);
-                return false;
-            }
-
-            //check costituzione
-
-            if (costituzione < 0.0 || costituzione > 1.0)
-            {
-                Console.WriteLine("Il campo \"costituzione\" {0} non rispetta i limiti imposti (0.0 - 1.0)", costituzione);
-                return false;
-            }
-
-            //check giorni settimana
-
-            for (int i = 0; i < presenze.Length; i++)
-            {
-                if (!giornisettimana.Contains(presenze[i]))
-                {
-                    Console.WriteLine("Il campo \"presenze\" contiene il carattere errato: {0}", presenze[i]);
-                    return false;
-                }
-            }
-
-            return true;
-
-        }
-
-        public static void verifica_e_introduci(string[] strings)
-        {
-            string nome = strings[1];
-            char sesso = Convert.ToChar(strings[2]);
-            int denaro = Convert.ToInt32(strings[3]);
-            int eta = Convert.ToInt32(strings[4]);
-            int altezza = Convert.ToInt32(strings[5]);
-            int peso = Convert.ToInt32(strings[6]);
-            float capelli = float.Parse(strings[7], CultureInfo.InvariantCulture.NumberFormat);
-            float costituzione = float.Parse(strings[8], CultureInfo.InvariantCulture.NumberFormat);
-            string presenze = strings[9];
-
-            if (VerificaPersona(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
-            {
-                if(introduci(nome, sesso, denaro, eta, altezza, peso, capelli, costituzione, presenze))
-                {
-                Console.WriteLine("{0} è stato introdotto nell'elenco!", nome);
-                }
-                else
-                {
-                 Console.WriteLine("{0} è in lista nera!", nome);
-                }
-            }
-        }
-
-        public static bool introduci(string nome, char sesso, int denaro, int età, int altezza, int peso, float colorecapelli, float costituzione, string presenze)
-        {   
-            if (sesso == 'M')
-            {
-                Politico P = new Politico(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                if (!(ListaNera.Contains(P) || ListaPolitici.Contains(P)))
-                {
-                    ListaPolitici.Add(P);
-                    return true;
-                }
-                //il politico viene aggiunto nella lista degli invitati solo se non è segnato nella lista nera e non è già stato precedentemente aggiunto nella lista 
-            }
-            else
-            {
-                Escort E = new Escort(nome, sesso, denaro, età, altezza, peso, colorecapelli, costituzione, presenze);
-                if (!(ListaNera.Contains(E) || ListaEscort.Contains(E)))
-                {
-                    ListaEscort.Add(E);
-                    return true;
-                }
-            }
-            return false; //BUG: non viene mai eseguito il return FALSE! (lista nera)
-        }
-
-        public static void estrometti(string nome)
-        {
-
-            var politico_estromesso = ListaPolitici.SingleOrDefault(x => x.nome == nome); // controlla se il soggetto è già presente nella lista
-            if (politico_estromesso != null)
-            {
-                ListaPolitici.Remove(politico_estromesso);  // elimina il soggetto dalla lista
-                ListaNera.Add(politico_estromesso); //aggiungo il soggetto alla black list
-            }
-
-            else
-            {
-                var escort_estromessa = ListaEscort.SingleOrDefault(x => x.nome == nome);
-                if (escort_estromessa != null)
-                {
-                    ListaEscort.Remove(escort_estromessa);
-                    ListaNera.Add(escort_estromessa);
-                }
-
-            }
-
-        }
+            get { return ListaPolitici; }
+            protected set { ListaPolitici; }
+        }*/
 
         public static int bungabunga(char giorno, int Naccoppiamenti)
         {
