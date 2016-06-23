@@ -13,7 +13,7 @@ namespace BungaBunga
             string line;
             string evento;
 
-            string path = @"C:\Users\rebolan1\Desktop\provaBungaReinserimentoDiPersona.txt";
+            string path = @"C:\Users\castese1\Desktop\provaBungaReinserimentoDiPersona.txt";
             // string fileName ="provaBunga.txt";
 
             StreamReader file = new StreamReader(path);
